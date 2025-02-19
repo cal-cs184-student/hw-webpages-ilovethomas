@@ -32,16 +32,11 @@
 
 		<br>
 
-		Link to webpage: (TODO) <a href="https://cal-cs184-student.github.io/hw-webpages-ilovethomas/">https://cal-cs184-student.github.io/hw-webpages-ilovethomas/</a>
+		Link to webpage: <a href="https://cal-cs184-student.github.io/hw-webpages-ilovethomas/">https://cal-cs184-student.github.io/hw-webpages-ilovethomas/</a>
 		
 		<br>
 
-		Link to GitHub repository: (TODO) <a href="https://github.com/cal-cs184-student/sp25-hw1-biancano/tree/master">https://github.com/cal-cs184-student/sp25-hw1-biancano/tree/master</a>
-
-		<figure>
-			<img src="lion.jpg" alt="Lion" style="width:50%"/>
-			<figcaption>You can add images with captions!</figcaption>
-		</figure>
+		Link to GitHub repository: <a href="https://github.com/cal-cs184-student/sp25-hw1-biancano/tree/master">https://github.com/cal-cs184-student/sp25-hw1-biancano/tree/master</a>
 
 		<!--
 		We've already added one heading per task, to make your write-up as navigable when grading. Please fit your write-up within these sections!
@@ -176,14 +171,16 @@
 			  <tr>
 				<td style="text-align: center;">
 				  <img src="sample_16_near.png" width="400px"/>
-				  <figcaption>Bilinear sampling at 1 sample per pixel,</figcaption>
+				  <figcaption>Bilinear sampling at 1 sample per pixel</figcaption>
 				</td>
 				<td style="text-align: center;">
 				  <img src="sample_16_bilinear.png" width="400px"/>
-				  <figcaption>Bilinear sampling at 16 samples per pixel,</figcaption>
+				  <figcaption>Bilinear sampling at 16 samples per pixel</figcaption>
 				</td>
 			  </tr>
 			</table>
+		</div>
+
 			<p>The difference between nearest and bilinear sampling is most evident in how they handle the tower's
 				fine details and edges of objects. Nearest sampling at 1 sample per pixel shows significant
 				aliasing and creates a blocky appearance obscures details like
@@ -200,8 +197,6 @@
 				sampling could be better for applications where color changes need to be crisp, like pixel art or text
 				elements.
 			</p>
-
-		</div>
 			<h2>Task 6: "Level Sampling" with mipmaps for texture mapping</h2>
 			<h3>Level sampling and implementation</h3>
 			<p>Level sampling, or mipmapping, is a technique used to prevent aliasing and improve rendering performance by displaying textures at different scales. The process begins by
@@ -244,19 +239,54 @@
 			<p> For linear level sampling, the code takes the floor and ceiling of the uv coordinate and gets the levels of both of them using the get_level function.
 				It then gets the colors from each of the two levels and scales them depending on how close they are to the original coordinate. </p>
 
-		<h2>Additional Notes (please remove)</h2>
-		<ul>
-			<li>You can also add code if you'd like as so: <code>code code code</code></li>
-			<li>If you'd like to add math equations, 
-				<ul>
-					<li>You can write inline equations like so: \( a^2 + b^2 = c^2 \)</li>
-					<li>You can write display equations like so: \[ a^2 + b^2 = c^2 \]</li>
-				</ul>
-			</li>
-		</ul>
-		<h2>(Optional) Task 7: Extra Credit - Draw Something Creative!</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
+			<h3>Techniques' performance</h3>
+			<p>Nearest/Bilinear pixel sampling techniques affect rendering quality and performance. Nearest neighbor sampling
+				is more efficient than bilinear since it only needs to fetch one pixel value, making it very fast and
+				memory-efficient. However, it produces aliased results since it doesn't account for neighboring pixels.
+				Bilinear sampling provides smoother results by interpolating between four neighboring pixel values, but requires more
+				computation and memory space since it needs to fetch and process four pixel values instead of one.</p>
+			<p>Level sampling through mipmaps trades additional memory usage (since it has to store more textures) for improved performance and quality
+			 . When viewing textures at a distance, it
+		    allows for faster rendering since it can sample from a smaller pre-filtered version of the texture rather
+				than having to average many pixels from the full-resolution texture. Nearest
+				level sampling rounds to the closest mipmap level, making it computationally efficient but potentially causes visible
+				"popping" artifacts when switching between levels. Linear level sampling solves this smoothly interpolating between
+				the two closest mipmap levels but comes at the cost of increased computation and memory access
+				since it needs to sample from two levels.</p>
+				<p>The number of samples per pixel directly impacts antialiasing quality and performance. Using more samples per pixel is able to capture more information
+					about the texture per pixel, but it linearly impacts computation time and memory usage. This is because instead of getting the pixel color once for a pixel, you would
+					have to grab and store it however many times you choose to sample. So instead of grabbing and storing one color, if you do 16 samples per pixel, you would be grabbing and 
+					storing 16 colors. More samples, will produce better effects for detailed textures and texture edges.
+				</p>
+				<p>For best quality image, you would do bilinear sampling for pixels and levels and the largest number of samples as possible. However, this will impact performance significantly.
+					The ideal is to find a balance between the quality you want and the performance you can spare.
+				</p>
+				<h3>Image comparison (1 sample per pixel)</h3>
+				<div style="display: flex; flex-direction: column; align-items: center;">
+					<table style="width: 100%; text-align: center; border-collapse: collapse;">
+						<tr>
+						<td style="text-align: center;">
+							<img src="L_nearest_P_nearest.png" width="400px"/>
+							<figcaption>Nearest level sampling, nearest pixel sampling</figcaption>
+						</td>
+						<td style="text-align: center;">
+							<img src="L_nearest_P_linear.png" width="400px"/>
+							<figcaption>Nearest level sampling, bilinear pixel sampling</figcaption>
+						</td>
+						</tr>
+						<tr>
+						<td style="text-align: center;">
+							<img src="L_zero_P_nearest.png" width="400px"/>
+							<figcaption>Zero level sampling, nearest pixel sampling</figcaption>
+						</td>
+						<td style="text-align: center;">
+							<img src="L_zero_P_linear.png" width="400px"/>
+							<figcaption>Zero level sampling, bilinear pixel sampling</figcaption>
+						</td>
+						</tr>
+					</table>
+				</div>
+				<p>As you can see, when we use level zero and nearest pixel, we get a high resolution image, but there are some signs of aliasin. When we use nearest level and nearest pixel, we can see changes in resolutions in the distant background. When we use level zero and linear interpolation, we can see the image still is high resolution, but is blurred. Finally, nearest level and linear interpolation gives us less resolution in the background, but the smoothing gets rid of any aliasing in the image.</p>
 		</div>
 	</body>
 </html>
