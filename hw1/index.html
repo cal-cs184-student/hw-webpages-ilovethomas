@@ -109,13 +109,154 @@
 			</table>
 		</div>
 		<h2>Task 5: "Pixel sampling" for texture mapping</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<h3>Pixel sampling and implementation</h3>
+		<p>Pixel sampling is the process of selecting pixel values from an image to determine what the rendered color should be.
+			<br><br> 
+			Task five used nearest neighbor sampling, where the closest pixel's color was used, and bilinear sampling, where the four closest pixels' colors were used and interpolated based on distance.</p>
+		<p>The sample_nearest function takes in two parameters, uv which are the u and v coordinates of 
+			the pixel being rendered, and level, which is the 
+			mipmap level of the texture being used. It returns the color the pixel should be. Its logic goes like this:</p>
+		<ol>
+			<li>Check that the level is not out of bounds, by checking that it is >= 0 and <= the size of the array with the mipmaps. If 
+				it is both of these, set the map to the inputted level. If it is not, return magenta </li>
+			<li>Scale uv to the texture's size by multiplying them by width/height - 1 respectively
+				<ul>
+					<li>
+						It is -1 since multiplying by just width/height will go out of index
+					</li>
+				</ul></li>
+			<li>Round the scaled uv values to get the nearest coordinate</li>
+			<li>Get the color at that coordinate and return it</li>
+		</ol>	
+		<p>The sample_bilinear function takes in two parameters, uv which are the u and v coordinates of 
+			the pixel being rendered, and level, which is the 
+			mipmap level of the texture being used. It returns the color the pixel should be. Its logic is similar to sample_nearest:</p>
+		<ol>
+			<li>Check that the level is not out of bounds, by checking that it is >= 0 and <= the size of the array with the mipmaps. If 
+				it is both of these, set the map to the inputted level. If it is not, return magenta </li>
+			<li>Scale uv to the texture's size by multiplying them by width/height - 1 respectively
+				<ul>
+					<li>
+						It is -1 since multiplying by just width/height will go out of index
+					</li>
+				</ul></li>
+			<li>Get four closest points by taking the scaled uv values and creating all combinations of the
+				floor and ceiling of the x and y.</li>
+			<li>Get the colors at the four coordinates</li>
+			<li>Get the final color by performing linear interpolation as follows:
+				<ul>
+					<li>s = horizontal distance between \(u_{00}\) and x of original point</li>
+					<li>t = vertical distance between \(u_{00}\) and x of original point</li>
+					<li>\(u_{00}\) = bottom left point</li>
+					<li>\(u_{01}\) = top left point</li>
+					<li>\(u_{10}\) = bottom right point</li>
+					<li>\(u_{11}\) = top right point</li>
+					<br>
+					<li>\( lerp(x, v_0, v_1) = v_0 + x(v_1 - v_0) \)</li>
+					<li>\( u_0 = lerp(s, u_{00}, u_{10}) \)</li>
+					<li>\( u_1 = lerp(s, u_{01}, u_{11}) \)</li>
+					<li>\( final = lerp(t, u_0, u_1) \)</li>
+				</ul>
+			</li>
+			<li>return final color</li>
+		</ol>	
+		<h3>Nearest vs. Bilinear Sampling</h3>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="sample_1_near.png" width="400px"/>
+				  <figcaption>Nearest sampling at 1 sample per pixel</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="sample_1_bilinear.png" width="400px"/>
+				  <figcaption>Nearest sampling at 16 samples per pixel</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="sample_16_near.png" width="400px"/>
+				  <figcaption>Bilinear sampling at 1 sample per pixel,</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="sample_16_bilinear.png" width="400px"/>
+				  <figcaption>Bilinear sampling at 16 samples per pixel,</figcaption>
+				</td>
+			  </tr>
+			</table>
+			<p>The difference between nearest and bilinear sampling is most evident in how they handle the tower's
+				fine details and edges of objects. Nearest sampling at 1 sample per pixel shows significant
+				aliasing and creates a blocky appearance obscures details like
+				the horizontal lines on the tower from the ledges. Increasing to 16 samples reduces the jagged edges,
+				but it averages out the fine details even more. In contrast, bilinear sampling produces smoother
+				transitions and better preserves structural details like the tower's horizontal lines, even at 1 sample
+				per pixel. It does this by interpolating between pixels rather than choosing single discrete values. 
+				Even at 16 samples, it is able to preserve the fine details, unlike nearest sampling at 16 samples per pixel. 
+				<br>
+				<br> 
+				This demonstrates that bilinear sampling's
+				ability to interpolate between pixels is superior to nearest sampling and enhances the preservation of certain types of details,
+				particularly when those details involve gradual transitions or fine linear features. However, nearest
+				sampling could be better for applications where color changes need to be crisp, like pixel art or text
+				elements.
+			</p>
 
-		<h2>Task 6: "Level Sampling" with mipmaps for texture mapping</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		</div>
+			<h2>Task 6: "Level Sampling" with mipmaps for texture mapping</h2>
+			<h3>Level sampling and implementation</h3>
+			<p>Level sampling, or mipmapping, is a technique used to prevent aliasing and improve rendering performance by displaying textures at different scales. The process begins by
+			pre-processing the texture to create increasingly smaller versions. The original texture serves as level
+			0, and each subsequent level is downsampled to half the size of the previous one. This forms a series of mipmaps that can
+			be selected based on viewing distance or scale.
+			When rendering each pixel, the system calculates which mipmap level would
+			provide the optimal balance between quality and performance. </p>
+			<p>The get_level function takes in the sample parameters structure which contains: p_uv, current pixel's texture coordinates, 
+				p_dx_uv, texture coordinates of the pixel one step to the right, and p_dy_uv, texture coordinates of the pixel one step up.
+				It returns the level of the mipmap. It is implemented as follows:
+			</p>
+			<ol>
+				<li>Calculate texture coordinate differences
+					<ul>
+						<li>\( dx\_diff = p\_dx\_uv - p\_uv \)</li>
+						<li>\( dy\_diff = p\_dy\_uv - p\_uv \)</li>
+					</ul>
+				</li>
+				<li>Scale differences with width/length of full resolution texture</li>
+				<li>Find the maximum rate of change by doing:
+					<ul>
+						<li>
+							\( L = max(sqrt((du/dx)² + (dv/dx)²), sqrt((du/dy)² + (dv/dy)²)) \)
+						</li>
+					</ul>
+				</li>
+				<li>Get level by doing:</li>
+				<ul>
+					<li>
+						\( level = log_2L \)
+					</li>
+				</ul>
+				<li>Return level</li>
+				<ul>
+					<li>Returns highest level of mipmap if calculated level is greater than number of available levels</li>
+				</ul>
+			</ol>
+			<p> For nearest level sampling, the get_level function is called for the uv coordinate to get the level.</p>
+			<p> For linear level sampling, the code takes the floor and ceiling of the uv coordinate and gets the levels of both of them using the get_level function.
+				It then gets the colors from each of the two levels and scales them depending on how close they are to the original coordinate. </p>
 
+		<h2>Additional Notes (please remove)</h2>
+		<ul>
+			<li>You can also add code if you'd like as so: <code>code code code</code></li>
+			<li>If you'd like to add math equations, 
+				<ul>
+					<li>You can write inline equations like so: \( a^2 + b^2 = c^2 \)</li>
+					<li>You can write display equations like so: \[ a^2 + b^2 = c^2 \]</li>
+				</ul>
+			</li>
+		</ul>
 		<h2>(Optional) Task 7: Extra Credit - Draw Something Creative!</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
 		</div>
 	</body>
 </html>
