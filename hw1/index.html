@@ -287,6 +287,20 @@
 					</table>
 				</div>
 				<p>As you can see, when we use level zero and nearest pixel, we get a high resolution image, but there are some signs of aliasin. When we use nearest level and nearest pixel, we can see changes in resolutions in the distant background. When we use level zero and linear interpolation, we can see the image still is high resolution, but is blurred. Finally, nearest level and linear interpolation gives us less resolution in the background, but the smoothing gets rid of any aliasing in the image.</p>
-		</div>
+				<h2>Task 7: Extra Credit - Draw Something Creative!</h2>
+				<h3>SVG generation</h3>
+				<div style="display: flex; flex-direction: column; align-items: center;">
+					<table style="width: 100%; text-align: center; border-collapse: collapse;">
+					  <tr>
+						<td style="text-align: center;">
+						  <img src="edwin.png" width="400px"/>
+						  <figcaption>Competition png</figcaption>
+						</td>
+					  </tr>
+					</table>
+				</div>
+				<br>
+				Similar to how our rasterizer worked, we wrote a Python script that read an image, reduced it to an \(800\times 800\) image, got the color value at each pixel, and drew a \(1\times 1\) rectangle at that location.
+			</div>
 	</body>
 </html>
