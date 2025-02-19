@@ -28,15 +28,15 @@
 	<body>
 		<div class="container">
 		<h1>CS184/284A Spring 2025 Homework 1 Write-Up</h1>
-		<div style="text-align: center;">Names: </div>
+		<div style="text-align: center;">Names: Ryan Kwong, Lemuel Sumardy</div>
 
 		<br>
 
-		Link to webpage: (TODO) <a href="https://cs184.eecs.berkeley.edu/sp25">cs184.eecs.berkeley.edu/sp25</a>
+		Link to webpage: (TODO) <a href="https://cal-cs184-student.github.io/hw-webpages-ilovethomas/">https://cal-cs184-student.github.io/hw-webpages-ilovethomas/</a>
 		
 		<br>
 
-		Link to GitHub repository: (TODO) <a href="https://cs184.eecs.berkeley.edu/sp25">cs184.eecs.berkeley.edu/sp25</a>
+		Link to GitHub repository: (TODO) <a href="https://github.com/cal-cs184-student/sp25-hw1-biancano/tree/master">https://github.com/cal-cs184-student/sp25-hw1-biancano/tree/master</a>
 
 		<figure>
 			<img src="lion.jpg" alt="Lion" style="width:50%"/>
@@ -48,46 +48,66 @@
 		-->
 
 		<h2>Overview</h2>
-		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.
-
+		In this proiect, we are implementing a basic rasterizer. This program is able to parse an SVG file and take the convert the polygons to triangles. The polygons are then converted into triangles which are rasterized by supersampling at a user specified rate. The triangles can either be a single color, an interpolated color, or mapped to a texture file.
 		<h2>Task 1: Drawing Single-Color Triangles</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		For the basic implementation of rasterization, we found the bounding box by finding the min and max of both the x and y coordinates of the triangle. Thus, the bounding box is confined to \(\texttt{min}(x_0,x_1,x_2) \leq x \leq \texttt{max}(x_0,x_1,x_2)\) and \(\texttt{min}(y_0,y_1,y_2) \leq y \leq \texttt{max}(y_0,y_1,y_2)\). I then iterated through each pixel in the bounding box and implemented 3 line tests to determine whether to color the pixel or not. This worked, as seen in <code>basic/test4.svg</code>:
 
-		<p>Here is an example 2x2 gridlike structure using an HTML table. Each <b>tr</b> is a row and each <b>td</b> is a column in that row. You might find this useful for framing and showing your result images in an organized fashion.</p>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="lion.jpg" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
-				</td>
-				<td style="text-align: center;">
-				  <img src="lion.jpg" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
-				</td>
-			  </tr>
-			  <tr>
-				<td style="text-align: center;">
-				  <img src="lion.jpg" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
-				</td>
-				<td style="text-align: center;">
-				  <img src="lion.jpg" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
+				  <img src="task1.png" width="400px"/>
+				  <figcaption>Rasteriation: No aliasing</figcaption>
 				</td>
 			  </tr>
 			</table>
 		</div>
+
+		Notice how the long pink and red triangles experience aliasing (jaggies). This will be solved in Part 2 with supersampling.
 		
 		<h2>Task 2: Antialiasing by Supersampling</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		To implement supersampling, we first had to resize <code>framebuffer</code>. For example, to rasterize an image with a display size of \(1000\times 1000\), and a sampling rate of \(16\) samples per pixel, the new framebuffer would need to be \(1000\cdot \sqrt{16}\times 1000\cdot \sqrt{16}=4000\times 4000\). This was done in <code>RasterizerImp::RasterizerImp()</code>, <code>RasterizerImp::set_framebuffer_target()</code>. Then we iterated through each sub-pixel in <code>RasterizerImp::rasterize_triange</code>, which was then sent to the <code>sample_buffer</code>. These subpixels are then averaged in <code>RasterizerImp::resolve_to_framebuffer</code> which then sets the respective pixel to the averaged color. You can see the difference when looking at the pink triangle in <code>basic/test4.svg</code>:
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="task2.png" width="400px"/>
+				  <figcaption>Rasteriation: Antialiasing via supersampling</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		Notice that the pink and red triangles have significantly improved in terms of aliasing. There is still slight remenants of jaggies, but this can be solved with a higher smapling rate.
 
 		<h2>Task 3: Transforms</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
+		Robot man is now waving. There were some scalings and translations to showcase the transformations possible.
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="task3.png" width="400px"/>
+				  <figcaption>Robot doing the wave</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
 		<h2>Task 4: Barycentric coordinates</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
+		Barycentric coordinates can be best described as a weighted average between points. In the interpolated triangle below, we set the top corner of the triangle to be red, the bottom left corner of the triangle to be green and the bottom right corner of the triangle to be blue. The closer a point is to a certain corner, the closer to that corner's color the pixel is. Thus, we can see as we approach the top, bottom left, bottom right of the triangle, the pixels become more red, green, and blue, respectively. We can also see as we approach the center, the weights become equal and the colors combine to become black.
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="task4-1.png" width="400px"/>
+				  <figcaption>Interpolated triangle</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="task4-2.png" width="400px"/>
+					<figcaption>Color wheel</figcaption>
+				  </td>
+			  </tr>
+			</table>
+		</div>
 		<h2>Task 5: "Pixel sampling" for texture mapping</h2>
 		<h3>Pixel sampling and implementation</h3>
 		<p>Pixel sampling is the process of selecting pixel values from an image to determine what the rendered color should be.
@@ -234,6 +254,9 @@
 				</ul>
 			</li>
 		</ul>
+		<h2>(Optional) Task 7: Extra Credit - Draw Something Creative!</h2>
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
 		</div>
 	</body>
 </html>
