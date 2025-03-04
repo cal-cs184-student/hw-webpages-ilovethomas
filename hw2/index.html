@@ -28,7 +28,7 @@
 	<body>
 		<div class="container">
 		<h1>CS184/284A Spring 2025 Homework 2 Write-Up</h1>
-		<div style="text-align: center;">Names: </div>
+		<div style="text-align: center;">Names: Ryan Kwong, Lemuel Sumardy</div>
 
 		<br>
 
@@ -37,11 +37,6 @@
 		<br>
 		
 		Link to GitHub repository: (TODO) <a href="https://cs184.eecs.berkeley.edu/sp25">cs184.eecs.berkeley.edu/sp25</a>
-
-		<figure>
-			<img src="teapot.png" alt="Teapot" style="width:50%"/>
-			<figcaption>You can add images with captions!</figcaption>
-		</figure>
 
 		<!--
 		We've already added one heading per part, to make your write-up as navigable when grading. Please fit your write-up within these sections!
@@ -53,45 +48,90 @@
 		<h2>Section I: Bezier Curves and Surfaces</h2>
 
 		<h3>Part 1: Bezier curves with 1D de Casteljau subdivision</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-		<p>Here is an example 2x2 gridlike structure using an HTML table. Each <b>tr</b> is a row and each <b>td</b> is a column in that row. You might find this useful for framing and showing your result images in an organized fashion.</p>
+		De Casteljau's algorithm is implemented by taking a weighted linear interpolation (lerp) based on some parameter \(t\). Given \(n\) control points \(P^0_i\) in a Bezier curve, we can find \(n-1\) intermediate points \(P^1_i\) by applying the following formula:
+		\[P^1_i(t)=(1-t)P^0_i+tP^0_{i+1}\]
+		Thus, if we had a curve with 6 control points, by applying de Casteljau's algorithm once, we get 5 sub-control points as such:
+		<figure>
+			<img src="bzc-layer2.png" alt="Teapot" style="width:100%"/>
+			<figcaption>Original 6 control points (white) and subcontrol points (blue) using de Casteljau's algorithm</figcaption>
+		</figure>
+		We can see that we can apply deCasteljau's algorithm until there is only one control point remaining. Thus, we can then generalize the formula for \(k\)th iteration of de Casteljau's algorithm to be as such:
+		\[P^k_i(t)=(1-t)P^{k-1}_i + tP^{k-1}_{i+1}\]
+		using this formula, we can reduce the control points down to a singular point. At that point, we will be filling the pixel, and as we vary the parameter \(t\) from 0 to 1, we create the curve. This can be seen in the images below:
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="teapot.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
+					<img src="bzc-0.png" width="400px"/>
+					<figcaption>Orignal control points</figcaption>
 				</td>
 				<td style="text-align: center;">
-				  <img src="teapot.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
+					<img src="bzc-1.png" width="400px"/>
+					<figcaption>1st iteration of de Casteljau</figcaption>
 				</td>
+			  </tr>
+				<td style="text-align: center;">
+				  <img src="bzc-2.png" width="400px"/>
+				  <figcaption>2nd iteration of de Casteljau</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="bzc-3.png" width="400px"/>
+					<figcaption>2rd iteration of de Casteljau</figcaption>
+				  </td>
 			  </tr>
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="teapot.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
+				  <img src="bzc-4.png" width="400px"/>
+				  <figcaption>4th iteration of de Casteljau</figcaption>
 				</td>
 				<td style="text-align: center;">
-				  <img src="teapot.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
+				  <img src="bzc-5.png" width="400px"/>
+				  <figcaption>5th iteration of de Castelju. Only 1 control point! Draw curve at that point!</figcaption>
 				</td>
 			  </tr>
 			</table>
 		</div>
 
 		<h3>Part 2: Bezier surfaces with separable 1D de Casteljau</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
+		A Bezier surface is an extension of the Bezier curve. Given the \(u\times v\) 2D vector of control points, we can use deCasteljau's algorithm to simplify the control points in the v axis dow to a single point. This leaves a vector of contrl points along the u axis, which we can then reapply de Casteljau's algorithm to reduce all the points down to a single drawing point. We can then vary the u and v parameters from 0 to 1 to get the smooth 3D surface as seen below:
+		<figure>
+			<img src="teampt_bez.png" alt="Teapot" style="width:100%"/>
+			<figcaption>Teapot</figcaption>
+		</figure>
 		<h2>Section II: Triangle Meshes and Half-Edge Data Structure</h2>
 
 		<h3>Part 3: Area-weighted vertex normals</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
+		To get the area-weighted vertex normals, we first need to find the three vertices that make up the triangle face. We can do so by calling <code>this->halfedge()->next()->vertex()</code> and <code>this->halfedge()->next()->next()->vertex()</code>. We then determine the subtending vectors by subtracting the positions of the other vertices from the position of the vertex object. We can then calculate the cross product between these vectors to find the orthoganal vector. To deterine the area of the triangle, We can simply divided the cross product(which also represents the area of the parallelogram formed by the two vectors) by 2. Finally, we make the vector a unit vector by calling the <code>unit()</code> funtion and return that vector.
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+					<img src="teapot_flat.png" width="400px"/>
+					<figcaption>No area normalization</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="teapot_smooth.png" width="400px"/>
+					<figcaption>Area normalization</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
 		<h3>Part 4: Edge flip</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
+		In order to flip the edge, we got both the halfedge and its twin and iterated through all the vertices to to get the geometry of the two trangles. We then change the vertices of the desired edge to change to the opposite orientation. In our case, we labeled the original vertices v0 and v1 and changed the edge to point to v2 and v3. Then, in order to make sure the triangles update to the correct geometry, we reassign each halfedge to point at the correct face, update the next pointers to point to the right direction for both the halfedge and the twin, and update the face pointers to point to the correct new faces. Once we have ensured the correct geometry has been maintained, we can return the edge, which now points to the correct geometry.
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+					<img src="teapot_before.png" width="400px"/>
+					<figcaption>Before flip</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="teapot_after.png" width="400px"/>
+					<figcaption>After flip</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
 		<h3>Part 5: Edge split</h3>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
