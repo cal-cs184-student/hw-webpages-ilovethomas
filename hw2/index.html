@@ -90,7 +90,11 @@
 			  </tr>
 			</table>
 		</div>
-
+		We can see how the control points and \(t\) parameter affect the shape of the curve below:
+		<figure>
+			<img src="bzc-alt.png" alt="Teapot" style="width:100%"/>
+			<figcaption>Changed control points and parameter</figcaption>
+		</figure>
 		<h3>Part 2: Bezier surfaces with separable 1D de Casteljau</h3>
 		A Bezier surface is an extension of the Bezier curve. Given the \(u\times v\) 2D vector of control points, we can use de Casteljau's algorithm to simplify the control points in the v axis down to a single point. This leaves a vector of contr0l points along the u axis, which we can then reapply de Casteljau's algorithm to reduce all the points down to a single drawing point. We can then vary the u and v parameters from 0 to 1 to get the smooth 3D surface as seen below:
 		<figure>
