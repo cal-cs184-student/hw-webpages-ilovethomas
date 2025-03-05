@@ -132,33 +132,34 @@
 			  </tr>
 			</table>
 		</div>
+		One debugging journey we went through was figuring out why flipping edges sometimes caused faces to disappear. It turned out that we were assigning faces to the incorrect halfedges. Sometimes, this would coincidentally work out and the mesh would appear normal after the flipping operation. In order to debug, we had to draw out a diagram of the different halfedges and individually write out which halfedge had what geometry. We then found out that we had flipped the assignment.
 		<h3>Part 5: Edge split</h3>
 		<h4>How it was implemented</h4>
-		<h4>??? mesh before and after edge splits</h4>
+		<h4>Teapot mesh before and after edge splits</h4>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="sample_1_near.png" width="400px"/>
+				  <img src="teapot_no_split.png" width="400px"/>
 				  <figcaption>Before edge splits</figcaption>
 				</td>
 				<td style="text-align: center;">
-				  <img src="sample_1_bilinear.png" width="400px"/>
+				  <img src="teapot_split.png" width="400px"/>
 				  <figcaption>After edge splits</figcaption>
 				</td>
 			  </tr>
 			</table>
 		</div>
-		<h4>??? mesh before and after combination of both edge splits and edge flips</h4>
+		<h4>Teapot mesh before and after combination of both edge splits and edge flips</h4>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="sample_1_near.png" width="400px"/>
+				  <img src="teapot_no_split.png" width="400px"/>
 				  <figcaption>Before combination of edge splits and edge flips</figcaption>
 				</td>
 				<td style="text-align: center;">
-				  <img src="sample_1_bilinear.png" width="400px"/>
+				  <img src="teapot_split_flip.png" width="400px"/>
 				  <figcaption>After combination of edge splits and edge flips</figcaption>
 				</td>
 			  </tr>
