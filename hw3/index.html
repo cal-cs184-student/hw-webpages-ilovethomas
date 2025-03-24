@@ -28,7 +28,7 @@
 	<body>
 		<div class="container">
 		<h1>CS184/284A Spring 2025 Homework 3 Write-Up</h1>
-		<div style="text-align: center;">Names: </div>
+		<div style="text-align: center;">Names: Ryan Kwong, Lemuel Sumardy</div>
 
 		<br>
 
@@ -45,62 +45,93 @@
 		-->
 
 		<h2>Overview</h2>
-		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.
+		In this project, we implemented a ray tracer that is able to provide realistic and rich lighting on 3D objects thruogh direct and indirect lighting as well as efficient lighting through the use of BVHs and adaptive sampling.
 
 		<h2>Part 1: Ray Generation and Scene Intersection</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<h4>Ray Generation</h4>
+		To generate a ray, 
 
-		<p>Here is an example 2x2 gridlike structure using an HTML table. Each <b>tr</b> is a row and each <b>td</b> is a column in that row. You might find this useful for framing and showing your result images in an organized fashion.</p>
+		<h4>Ray-Triangle Intersection</h4>
+		For ray-triangle intersection, we used the Moller-Trumbore algorithm, which is defined as follows:
+		<ul>
+			<li>Given the three points of the triangle \(\vec{v_0}, \vec{v_1}, \vec{v_2}\), we can express any point inside the triangle as \(\vec{P}=\vec{v_0}+\alpha(\vec{v_1}-\vec{v_0})+\beta(\vec{v_2}-\vec{v_0})\)</li>
+			<li>By substituting the ray equaiton \(\vec{r}(t)=\vec{O}+t\vec{D}\) into the triangle point intersection equation, we are able to simplify the equation down to a quadratic equation \(\vec{O}-\vec{v_0}=-t\vec{D}+\alpha(\vec{v_1}-\vec{v_0})+\beta(\vec{v_2}-\vec{v_0})\)</li>
+			<li>To solve for \(t,\alpha,\beta \), we can solve the matrix equation (Latex matrix formatting doesn't work for some reason)
+				\[ [-\vec{D} \vec{E_1} \vec{E_2}][t \alpha \beta]^\top=\vec{T}
+				\]
+			where \(\vec{E_1}=\vec{v_1}-\vec{v_0}, \vec{E_2}=\vec{v_2}-\vec{v_0}, \vec{T}=\vec{O}-\vec{v_0}\)</li>
+			<li>We can determine of the point is inside the triangle by checking if \(t>0, 0\leq\alpha\leq 1, 0\leq\beta\leq 1, \alpha+\beta\leq 1\). If these conditions are met, the ray intersects the triangle at time \(t\).<li>
+		</ul>
+		<h4>Ray-Sphere Intersection</h4>
+		Give the ray equation \(\vec{r}(t)=\vec{O}+t\vec{D}\) where \(\vec{O}\) is the origin vector and \(\vec{D}\) is the direction vector, we can calculate the intersections by substituting the ray equation into the sphere equation \(\vec{P}-\vec{C}=r^2\) for any arbitrary point \(\vec{P}\) for a sphere with center \(\vec{C}\) and radius \(r\). With this substitution we can simplify to get the quadratic equation \[t^2(\vec{D}\cdot\vec{D})+2t(\vec{v}\cdot\vec{D})-\vec{v}\cdot\vec{v}-r^2=0\]	
+		where \(\vec{v}=\vec{O}-\vec{C}\). Given two real solutions \(t_1, t_2, t_2>t_1\), we know that the ray enters the sphere at \(t_1\) and leaves at \(t_2\). If there is one real solution, the ray is tangent to the sphere and if there are no real solutions, the ray does not intersect the sphere.
+
+		<p>Here are some example normal shadings:</p>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
 				  <img src="cornell.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
+				  <figcaption>cow.dae normal shading</figcaption>
 				</td>
 				<td style="text-align: center;">
 				  <img src="cornell.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
-				</td>
-			  </tr>
-			  <tr>
-				<td style="text-align: center;">
-				  <img src="cornell.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
-				</td>
-				<td style="text-align: center;">
-				  <img src="cornell.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
+				  <figcaption>banana.dae normal shading</figcaption>
 				</td>
 			  </tr>
 			</table>
 		</div>
 		
 		<h2>Part 2: Bounding Volume Hierarchy</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
+		We chose a simple bounding heuristic. The program does a simple check of which dimension of the bounding box is largest. This way, we can most effectively split the primitives evenly. To choose the split position, we used the median element, as it was a simple, yet effective way of distributing primitives so that the \(O(\log_2(n))\) efficiency could be taken advantage of.
+		<br><br>
+		We chose to use <code>cow.dae</code> as our benchmark. The rendering time without the BVH implementation took 35.85 seconds. However, when we implement the BVH, our rendering time was 0.081 seconds. This makes sense because based on the pathtracer debugging statements, <code>cow.dae</code> contians 5856 primitives. This means on average, the BVH should perform 450 times faster than the regular intersection for loop, which we can see is true. We can see similar results in <code>banana.dae</code> and <code>teapot.dae</code> whose non-BVH vs BVH times were 22.15s vs 0.061 and 20.41s vs 0.058s, respectively.  
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="cornell.png" width="400px"/>
+				  <figcaption>maxplanck.dae normal shading</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="cornell.png" width="400px"/>
+				  <figcaption>beetle.dae normal shading</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
 		<h2>Part 3: Direct Illumination</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
+		For <code>estimate_direct_lighting_hemisphere</code>, we simply sampled rays uniformly throughout the hemisphere. If the ray is interseccts the BVH, it calculated the output radiance based on the BSDF. In <code>estimate_direct_lighting_importance</code>, we iterated through all the light sources and dtermined whether they were point sources. Then, like the hemisphere direct lighting function, if the emitted ray intersects a BVH, we used the BSDF to calcualte the reflected light, and added it to the total light output. 
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="cornell.png" width="400px"/>
+				  <figcaption>CBspheres.dae hemisphere</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="cornell.png" width="400px"/>
+				  <figcaption>CBSpheres.dae importance</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="cornell.png" width="400px"/>
+				  <figcaption>CBbunny.dae hemisphere</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="cornell.png" width="400px"/>
+				  <figcaption>CBbunny.dae importance</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
 		<h2>Part 4: Global Illumination</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 		<h2>Part 5: Adaptive Sampling</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-		<h2>(Optional) Part 6: Extra Credit Opportunities</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-		
-		<h2>Additional Notes (please remove)</h2>
-		<ul>
-			<li>You can also add code if you'd like as so: <code>code code code</code></li>
-			<li>If you'd like to add math equations, 
-				<ul>
-					<li>You can write inline equations like so: \( a^2 + b^2 = c^2 \)</li>
-					<li>You can write display equations like so: \[ a^2 + b^2 = c^2 \]</li>
-				</ul>
-			</li>
-		</ul>
 		</div>
 	</body>
 </html>
