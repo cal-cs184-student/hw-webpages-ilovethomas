@@ -138,6 +138,28 @@
 		One debugging journey we went through was figuring out why flipping edges sometimes caused faces to disappear. It turned out that we were assigning faces to the incorrect halfedges. Sometimes, this would coincidentally work out and the mesh would appear normal after the flipping operation. In order to debug, we had to draw out a diagram of the different halfedges and individually write out which halfedge had what geometry. We then found out that we had flipped the assignment.
 		<h3>Part 5: Edge split</h3>
 		<h4>How it was implemented</h4>
+		<p>
+			The implementation of edge split was done by first getting the halfedges of 
+			the edge that was being split, and their corresponding faces and edges. If any of
+			the faces were boundary faces, it would immediately return the bottom original vertex.
+		</p>
+		<p>
+			Once that check was done, we set iterators to the rest of the half edges and vertices in the mesh, 
+			and create 3 new edges, 6 new halfedges, 2 new faces and a vertex for the split.
+			The position of the vertex is set to be the mid point between the 
+			2 vertices of the edge being split. 
+		</p>
+			Now that there are iterators for all the half edges, edges, faces and vertices corresponding
+			to the new mesh after the split, we used setNeighbors on all the half edges to
+			reassign its next halfedge, twin, vertex, edge and face corresponding to the new
+			mesh. For the faces, edges, and vertices we also reassigned their corresponding halfedge
+			to the appropriate halfedge. To make this easier, I had a drawing of the mesh after
+			it was split and the names of all the iterators corresponding to each half edge, vertex
+			and face. I would just look at the half edge I was setting and see what the values were 
+			based on the drawing.
+		</p>
+
+		
 		<h4>Teapot mesh before and after edge splits</h4>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
@@ -169,23 +191,81 @@
 			</table>
 		</div>
 		<h4>My debugging journey</h4>
+		<p>Due to the nature of this function, which was purely creating new edges,
+			half edges, vertices, and faces, and the corresponding values to these and
+			the original objects, if the function failed when testing, the only option
+			was to look through my drawing of the mesh and see what we had assigned wrong.
+			we had to repeat this process of checking and fixing multiple times until the split
+			worked. One of the major errors that we had done was forgetting that faces and halfedges
+			exist outside of 2 triangles we were manipulating, causing the setNeighbors to
+			be incorrect for the outer halfedges.
+		</p>
 		<h3>Part 6: Loop subdivision for mesh upsampling</h3>
 		<h4>How it was implemented</h4>
+		<p>Loop subdivision was implemented following the 5 steps that were recommended. We first looped through
+			all the vertexes to compute their new position. For each vertex, we looped through all the neighboring,
+			vertexes to get n, u and the sum of all the neighboring positions. We then set newPosition equal
+			to 
+			</p>
+			<code> (1 - n * u) * v->position + u * position_sum</code>
+		<p>The next step was looping through every edge and calculating the position of the vertex that 
+			will be splitting it. This was done by getting the 4 vertices of the 2 triangles connected
+			to the edge and following the equation </p>
+			<code>(3.0 / 8) * (A_pos + B_pos) + (1.0 / 8) * (C_pos + D_pos)
+			</code>
+		<p>The third step was done by creating a vector with all the current edges (these are the original edges) and looping through
+			the vector. Each original edge was split and the new vector's newPosition flag was set to the newPosition flag on the edge'. The flag
+			isNew is also set on the vector.
+		</p>
+		<p>The fourth step was done by looping through all the meshes. The vertices connecting the edge was grabbed and if an old
+			vertex is connecting a new vertex (found by checking the flag), the edge is flipped.
+		</p>
+		<p>The final step was to loop through all the vertices and assign its position to its newPosition flag.</p>
+		<p>One interesting implementation/debugging trick I used was assigning the isNew flag to edges and vertices inside the split function
+			rather than inside the upsample function. I found this to be easier since there were iterators for the halfedges already
+			that I could use rather than trying to get them after running split edge.
+		</p>
 		<h4>Notes and observations about mesh behavior after subdivision</h4>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="cube_before.png" width="400px"/>
+				  <figcaption>Before upsampling</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="cube_after.png" width="400px"/>
+				  <figcaption>After upsampling</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+		<p>Sharp edges and corners tend to round off after being upsampled. This is extremely apparent in the cube, where after
+			being upsampled multiple times, is more like a gusher. Pre splitting edges along the corner and edges
+			is able to help maintain the sharper features during subdivision.
+		</p>
 		<h4>Experimenting with cube.dae</h4>
-		<h2>(Optional) Section III: Potential Extra Credit - Art Competition: Model something Creative</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<p>I was able to pre-process the cube with edge flips and splits so that the cube subdivides
+			symmetrically. I did this by splitting the edge in the middle so there were 4 equal faces
+			on each side of the cube. This happens because in presampling, the positions of the new vertices
+			are calculated based on the current vertices and based on the existing edges. Since there was only
+			one edge on each side of the cube, that edge is sampled more, creating more vertices assymetrically.
+			Basically the upsampling propagated the non-uniformity.
+		</p>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="preprocessed.png" width="400px"/>
+				  <figcaption>Preprocessed cube</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="preprocessed_upsample.png" width="400px"/>
+				  <figcaption>Upsampled preprocessed cube</figcaption>
+				</td>
+			  </tr>
+			</table>		
 
-		<h2>Additional Notes (please remove)</h2>
-		<ul>
-			<li>You can also add code if you'd like as so: <code>code code code</code></li>
-			<li>If you'd like to add math equations, 
-				<ul>
-					<li>You can write inline equations like so: \( a^2 + b^2 = c^2 \)</li>
-					<li>You can write display equations like so: \[ a^2 + b^2 = c^2 \]</li>
-				</ul>
-			</li>
-		</ul>
 		</div>
 	</body>
 </html>
