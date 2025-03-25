@@ -34,11 +34,6 @@
 
 		Link to webpage: (TODO) <a href="https://cs184.eecs.berkeley.edu/sp25">cs184.eecs.berkeley.edu/sp25</a>
 		Link to GitHub repository: (TODO) <a href="https://cs184.eecs.berkeley.edu/sp25">cs184.eecs.berkeley.edu/sp25</a>
-		
-		<figure>
-			<img src="cornell.png" alt="Cornell Boxes with Bunnies" style="width:70%"/>
-			<figcaption>You can add images with captions!</figcaption>
-		</figure>
 
 		<!--
 		We've already added one heading per part, to make your write-up as navigable when grading. Please fit your write-up within these sections!
@@ -49,7 +44,7 @@
 
 		<h2>Part 1: Ray Generation and Scene Intersection</h2>
 		<h4>Ray Generation</h4>
-		To generate a ray, 
+		To generate a ray, we need to convert the target coordinates from the image space to the camera space using \(x_{camera}=2x_{image}\tan(hFov/2)\) and \(y_{camera}=2y_{image}\tan(vFov/2)\) and then using the <code>c2w</code> matrix. Once we can generate rays from the camera, we are then able to implmen this in the pathtracer. Given the <code>gridSampler</code>, we can uniformly sample pixels in the image, normalize the coordniates and generate rays to start ray tracing. We can then call <code>set_radiance_global_illumination</code>, which for now returns the normal shading, and write the resulting pixel color to th buffer and update.
 
 		<h4>Ray-Triangle Intersection</h4>
 		For ray-triangle intersection, we used the Moller-Trumbore algorithm, which is defined as follows:
