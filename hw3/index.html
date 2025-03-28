@@ -66,14 +66,24 @@
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="cornell.png" width="400px"/>
+				  <img src="Images/Part 1/cow.png" width="400px"/>
 				  <figcaption>cow.dae normal shading</figcaption>
 				</td>
 				<td style="text-align: center;">
-				  <img src="cornell.png" width="400px"/>
-				  <figcaption>banana.dae normal shading</figcaption>
+				  <img src="Images/Part 1/CBempty.png" width="400px"/>
+				  <figcaption>CBempty.png normal shading</figcaption>
 				</td>
 			  </tr>
+				<tr>
+					<td style="text-align: center;">
+						<img src="Images/Part 1/CBspheres.png" width="400px"/>
+						<figcaption>CBspheres.dae normal shading</figcaption>
+					</td>
+					<td style="text-align: center;">
+						<img src="Images/Part 1/part_1_gems.png" width="400px"/>
+						<figcaption>CBgems.png normal shading</figcaption>
+					</td>
+					</tr>
 			</table>
 		</div>
 		
@@ -81,22 +91,42 @@
 		We chose a simple bounding heuristic. The program does a simple check of which dimension of the bounding box is largest. This way, we can most effectively split the primitives evenly. To choose the split position, we used the median element, as it was a simple, yet effective way of distributing primitives so that the \(O(\log_2(n))\) efficiency could be taken advantage of.
 		<br><br>
 		We chose to use <code>cow.dae</code> as our benchmark. The rendering time without the BVH implementation took 35.85 seconds. However, when we implement the BVH, our rendering time was 0.081 seconds. This makes sense because based on the pathtracer debugging statements, <code>cow.dae</code> contians 5856 primitives. This means on average, the BVH should perform 450 times faster than the regular intersection for loop, which we can see is true. We can see similar results in <code>banana.dae</code> and <code>teapot.dae</code> whose non-BVH vs BVH times were 22.15s vs 0.061 and 20.41s vs 0.058s, respectively.  
+		
+		<h3>Images with normal shading from large .dae files</h3>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="cornell.png" width="400px"/>
-				  <figcaption>maxplanck.dae normal shading</figcaption>
+				  <img src="Images/Part 2/part2_blob.png" width="400px"/>
+				  <figcaption>blob.dae normal shading</figcaption>
 				</td>
 				<td style="text-align: center;">
-				  <img src="cornell.png" width="400px"/>
-				  <figcaption>beetle.dae normal shading</figcaption>
+				  <img src="Images/Part 2/part2_dragon.png" width="400px"/>
+				  <figcaption>CBdragon.dae normal shading</figcaption>
 				</td>
 			  </tr>
+				<tr>
+					<td style="text-align: center;">
+						<img src="Images/Part 2/part2_lucy.png" width="400px"/>
+						<figcaption>lucy.dae normal shading</figcaption>
+					</td>
+					<td style="text-align: center;">
+						<img src="Images/Part 2/part2_maxplanck.png" width="400px"/>
+						<figcaption>maxplanck.dae normal shading</figcaption>
+					</td>
+					</tr>
+					<tr>
+						<td style="text-align: center;">
+							<img src="Images/Part 2/part2_walle.png" width="400px"/>
+							<figcaption>wall-e.dae normal shading</figcaption>
+						</td>
+
+						</tr>
 			</table>
 		</div>
 		<h2>Part 3: Direct Illumination</h2>
 		For <code>estimate_direct_lighting_hemisphere</code>, we simply sampled rays uniformly throughout the hemisphere. If the ray is interseccts the BVH, it calculated the output radiance based on the BSDF. In <code>estimate_direct_lighting_importance</code>, we iterated through all the light sources and dtermined whether they were point sources. Then, like the hemisphere direct lighting function, if the emitted ray intersects a BVH, we used the BSDF to calcualte the reflected light, and added it to the total light output. 
+		<h3>Images rendered with importance and hemisphere sampling</h3>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
@@ -105,28 +135,255 @@
 				  <figcaption>CBspheres.dae hemisphere</figcaption>
 				</td>
 				<td style="text-align: center;">
-				  <img src="cornell.png" width="400px"/>
+				  <img src="Images/Part 3/part_3_spheres_important.png" width="400px"/>
 				  <figcaption>CBSpheres.dae importance</figcaption>
 				</td>
 			  </tr>
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="cornell.png" width="400px"/>
+				  <img src="Images/Part 3/part_3_bunny_hemisphere.png" width="400px"/>
 				  <figcaption>CBbunny.dae hemisphere</figcaption>
 				</td>
 				<td style="text-align: center;">
-				  <img src="cornell.png" width="400px"/>
+				  <img src="Images/Part 3/part_3_bunny_important.png" width="400px"/>
 				  <figcaption>CBbunny.dae importance</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		<h3>Comparison of scene with different number light rays</h3>
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Images/Part 3/part_3_s_1.png" width="400px"/>
+				  <figcaption>CBbunny.dae with 1 light ray</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Images/Part 3/part_3_s_4.png" width="400px"/>
+				  <figcaption>CBbunny.dae with 4 light ray</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Images/Part 3/part_3_s_16.png" width="400px"/>
+				  <figcaption>CBbunny.dae with 16 light ray</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Images/Part 3/part_3_s_64.png" width="400px"/>
+				  <figcaption>CBbunny.dae with 64 light ray</figcaption>
 				</td>
 			  </tr>
 			</table>
 		</div>
 		<h2>Part 4: Global Illumination</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
+		<h3>Images rendered with global illumination</h3>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Images/Part 4/global-illumination/global_illum_bench.png" width="400px"/>
+				  <figcaption>bench.dae</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Images/Part 4/global-illumination/global_illum_blob.png" width="400px"/>
+				  <figcaption>blob.dae</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Images/Part 4/global-illumination/global_illum_bunny.png" width="400px"/>
+				  <figcaption>bunny.dae</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Images/Part 4/global-illumination/global_illum_dragon.png" width="400px"/>
+				  <figcaption>dragon.dae</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+		<h3>Comparison of only direct and indirect illumination</h3>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Images/Part 4/direct-vs-indirect/bunny_direct_only.png" width="400px"/>
+				  <figcaption>CBbunny.dae direct lighting only</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Images/Part 4/direct-vs-indirect/bunny_indirect_only.png" width="400px"/>
+				  <figcaption>CBbunny.dae indirect lighting only</figcaption>
+				</td>
+			</table>
+		</div>
+		<h3>CBbunny.dae with isAccumBounces=false</h3>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Images/Part 4/no-accumulate/bunny_off_0.png" width="400px"/>
+				  <figcaption>CBbunny.dae with m=0</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Images/Part 4/no-accumulate/bunny_off_1.png" width="400px"/>
+				  <figcaption>CBbunny.dae with m=1</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Images/Part 4/no-accumulate/bunny_off_2.png" width="400px"/>
+				  <figcaption>CBbunny.dae with m=2</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Images/Part 4/no-accumulate/bunny_off_3.png" width="400px"/>
+				  <figcaption>CBbunny.dae with m=3</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Images/Part 4/no-accumulate/bunny_off_4.png" width="400px"/>
+				  <figcaption>CBbunny.dae with m=4</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Images/Part 4/no-accumulate/bunny_off_5.png" width="400px"/>
+				  <figcaption>CBbunny.dae with m=5</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+		<h3>CBbunny.dae with isAccumBounces=true</h3>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Images/Part 4/accumulate/bunny_on_0.png" width="400px"/>
+				  <figcaption>CBbunny.dae with m=0</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Images/Part 4/accumulate/bunny_on_1.png" width="400px"/>
+				  <figcaption>CBbunny.dae with m=1</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Images/Part 4/accumulate/bunny_on_2.png" width="400px"/>
+				  <figcaption>CBbunny.dae with m=2</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Images/Part 4/accumulate/bunny_on_3.png" width="400px"/>
+				  <figcaption>CBbunny.dae with m=3</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Images/Part 4/accumulate/bunny_on_4.png" width="400px"/>
+				  <figcaption>CBbunny.dae with m=4</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Images/Part 4/accumulate/bunny_on_5.png" width="400px"/>
+				  <figcaption>CBbunny.dae with m=5</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+		<h3>CBbunny.dae with Russian Roulette rendering</h3>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Images/Part 4/accumulate/bunny_on_0.png" width="400px"/>
+				  <figcaption>CBbunny.dae with m=0</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Images/Part 4/accumulate/bunny_on_1.png" width="400px"/>
+				  <figcaption>CBbunny.dae with m=1</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Images/Part 4/accumulate/bunny_on_2.png" width="400px"/>
+				  <figcaption>CBbunny.dae with m=2</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Images/Part 4/accumulate/bunny_on_3.png" width="400px"/>
+				  <figcaption>CBbunny.dae with m=3</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Images/Part 4/accumulate/bunny_on_4.png" width="400px"/>
+				  <figcaption>CBbunny.dae with m=4</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Images/Part 4/bunny_roulete_100.png" width="400px"/>
+				  <figcaption>CBbunny.dae with m=100</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+		<h3>dragon.dae with various sample-per-pixel rates</h3>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Images/Part 4/Various-sample-rates/various_samples_1.png" width="400px"/>
+				  <figcaption>CBbunny.dae with s=1</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Images/Part 4/Various-sample-rates/various_samples_2.png" width="400px"/>
+				  <figcaption>CBbunny.dae with s=2</figcaption>
+				</td>
+			  </tr>
+				<tr>
+					<td style="text-align: center;">
+						<img src="Images/Part 4/Various-sample-rates/various_samples_4.png" width="400px"/>
+						<figcaption>dragon.dae with s=4</figcaption>
+					</td>
+					<td style="text-align: center;">
+						<img src="Images/Part 4/Various-sample-rates/various_samples_8.png" width="400px"/>
+						<figcaption>dragon.dae with s=8</figcaption>
+					</td>
+				</tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Images/Part 4/Various-sample-rates/various_samples_16.png" width="400px"/>
+				  <figcaption>dragon.dae with s=16</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Images/Part 4/Various-sample-rates/various_samples_64.png" width="400px"/>
+				  <figcaption>dragon.dae with s=64</figcaption>
+				</td>
+			  </tr>
+				<td style="text-align: center;">
+				  <img src="Images/Part 4/Various-sample-rates/various_samples_1024.png" width="400px"/>
+				  <figcaption>dragon.dae with s=1024</figcaption>
+				</td>
+			</table>
+		</div>
 		<h2>Part 5: Adaptive Sampling</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
+		<h3>Renders with adaptive sampling rate</h3>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Images/Part 5/bunny_5.png" width="400px"/>
+				  <figcaption>CBbunny.dae render</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Images/Part 5/bunny_5_rate.png" width="400px"/>
+				  <figcaption>CBbunny.dae rate</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="Images/Part 5/spheres_norm_5.png" width="400px"/>
+				  <figcaption>CBspheres.dae render</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="Images/Part 5/spheres_norm_5_rate.png" width="400px"/>
+				  <figcaption>CBspheres.dae rate</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>		
 		</div>
 	</body>
 </html>
