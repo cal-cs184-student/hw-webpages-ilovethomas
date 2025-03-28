@@ -71,7 +71,7 @@
 				</td>
 				<td style="text-align: center;">
 				  <img src="Images/Part 1/CBempty.png" width="400px"/>
-				  <figcaption>CBempty.png normal shading</figcaption>
+				  <figcaption>CBempty.dae normal shading</figcaption>
 				</td>
 			  </tr>
 				<tr>
@@ -81,7 +81,7 @@
 					</td>
 					<td style="text-align: center;">
 						<img src="Images/Part 1/part_1_gems.png" width="400px"/>
-						<figcaption>CBgems.png normal shading</figcaption>
+						<figcaption>CBgems.dae normal shading</figcaption>
 					</td>
 					</tr>
 			</table>
@@ -151,6 +151,13 @@
 			  </tr>
 			</table>
 		</div>
+		<p>The comparison of hemisphere sampling versus importance sampling has numerous
+			distinct characteristics. Hemisphere sampling produces
+			noisier images with brighter but inconsistent/sharper illumination.
+			Importance sampling generates cleaner results and more consistent shadows 
+			but appears slightly darker overall.
+			This happens because importance sampling prioritizes 
+			directions with greater light contribution.</p>
 
 		<h3>Comparison of scene with different number light rays</h3>
 
@@ -178,8 +185,30 @@
 			  </tr>
 			</table>
 		</div>
+		<p>The comparison of renders above with increasing light ray counts
+			shows how image quality in soft shadows improves as the number of light rays increase. 
+			At 1 ray, there is excessive noise that obscures the details
+			 and creates grainy shadows. At 4 rays, there is a modest improvement but it still
+			  shows visible artifacts. At 16 rays, most of the distracting noise
+				 disappears. Finally, the 64 ray render has the cleanest result
+				  with well-defined shadows and clear details. This demonstrates
+					 how higher ray counts reduce variance in Monte Carlo integration,
+					  which in turn improves areas with complex light interactions like
+						 soft shadows.</p>
 		<h2>Part 4: Global Illumination</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<p>
+			Indirect illumination occurs when light bounces off multiple surfaces before reaching the camera.
+			The function at_least_one_bounce_radiance handles the indirect lighting computation.
+			It first sets up a coordinate system at the hit point using the surface normal.
+			Then direct illumination is calculated using the one_bounce_radiance function.
+			For indirect illumination, a russian roulette with probability 0.25 to terminate is used.
+			The BSDF is sampled to get a new direction and the direction is then transformed to
+			to the world coordinates. A ray is then created from the origin to that direction.
+			If the ray intersects another object, the function recursively traces it, repeating 
+			this logic. The contribution is weighed by BSDF value f, cos(theta) and divided by the pdf
+			and continuation probability. at_least_one_bounce_radiance returns the sum of direct illumination and 
+			indirect illumination.
+		</p>
 		<h3>Images rendered with global illumination</h3>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
@@ -219,6 +248,15 @@
 				</td>
 			</table>
 		</div>
+		<p>
+			CBbunny with direct lighting only is an image of the bunny illuminated 
+			by the light coming directly from the ceiling light. The lighting appears
+			more focused and creates stronger shadows under the bunny. For the image with
+			indirect lighting only, there is a softer, more diffuse lighting effect through the scene,
+			which makes the scene much darker compared to the direct lighting scene. The
+			color from the walls also contributes through color bleeding where surfaces near
+			the color like floor, next door walls and the bunny have subtle shades of red and blue.
+		</p>
 		<h3>CBbunny.dae with isAccumBounces=false</h3>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
@@ -252,6 +290,18 @@
 			  </tr>
 			</table>
 		</div>
+		<p>
+			The 2nd and 3rd bounce images (m=2 and m=3) are important because they add 
+			indirect illumination effects that aren't possible with only rasterization.
+			As mentioned previously above, the indirect lighting scene added things like
+			subtle lighting, softer shadows and color bleeding which can once again be 
+			scene in the images of only the 2nd bounce and the 3rd bounce. The softer shadows
+			and color bleeding are more apparent in the 2nd bounce. The 3rd bounce contributes
+			less than the 2nd but still contributse to the overall quality of the rendered image
+			by adding some indirect light/shading. This is superior to traditional methods of
+			rasterization because rasterization does not put into account things like
+			lighting and color bleeding from lighting creating a less realistic image.
+		</p>
 		<h3>CBbunny.dae with isAccumBounces=true</h3>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
@@ -285,6 +335,16 @@
 			  </tr>
 			</table>
 		</div>
+		<p>The comparison between the rendered views of unaccumulated and accumulated
+			bounces for CBbunny.dae shows how each light bounce contributes to the 
+			final rendered scene. m=0 shows the light directly from light sources.
+			m=1 shows direct illumination, providing basic lighting. This can be seen 
+			in the accumulated image where the bunny has sharp lighting, dramatic lighting.
+			Then when m=2, subtle lighting is added and the accumulated image's dramatic
+			lighting disappears and is replaced with subtle shading. The color bleeding also shows up.
+			For m=3, m=4, and m=5 their contributions are minimal and only provide subtle refinements.
+			This is why their images in the unaccumulated view is so dark.
+		</p>
 		<h3>CBbunny.dae with Russian Roulette rendering</h3>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
@@ -324,11 +384,11 @@
 			  <tr>
 				<td style="text-align: center;">
 				  <img src="Images/Part 4/Various-sample-rates/various_samples_1.png" width="400px"/>
-				  <figcaption>CBbunny.dae with s=1</figcaption>
+				  <figcaption>dragon.dae with s=1</figcaption>
 				</td>
 				<td style="text-align: center;">
 				  <img src="Images/Part 4/Various-sample-rates/various_samples_2.png" width="400px"/>
-				  <figcaption>CBbunny.dae with s=2</figcaption>
+				  <figcaption>dragon.dae with s=2</figcaption>
 				</td>
 			  </tr>
 				<tr>
@@ -357,8 +417,30 @@
 				</td>
 			</table>
 		</div>
+		<p>At s=1 and s=2, the images are extremely noisy with significant grainy artifacts throughout.
+			Then at s=4, the noise starts to decrease and the dragons shape becomes more defined. 
+			This pattern continues as the sample-per-pixel rates increase. At s=1024, the image is 
+			incredibly clear and has no visible noise or artifacting.
+		</p>
 		<h2>Part 5: Adaptive Sampling</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<p>
+			Adaptive sampling is a technique that aims to fix the problem
+			of a fixed high number of samples per pixel by changing the number of samples
+			in different parts of the image. This is done by putting more samples
+			in more difficult parts of an image and fewer samples in regions that 
+			converge quickly. This is done by dynamically determining whether 
+			a pixel has converged.
+		</p>
+		<p>
+			Our implementation starts as follows. First the code initializes s1 and s2,
+			which are sums of the sampled values and sums of the squared sample values.
+			Then samples are taken in batches defined by samplesPerBatch. For each sample,
+			there is a random offset inside the pixel taken by using gridSampler->get_sample().
+			A camera ray is created and traced into that and the resulting radiance is added to s1
+			and its square to s2. After each batch, we calculate the mean, variance, standard deviation,
+			and then I where I = 1.96 * pixel_std_dev / sqrt(samples). If I ≤ maxTolerance * mean_illuminance
+			then it has converged and we stop sampling. The final color is the average of all the samples.
+		</p>
 		<h3>Renders with adaptive sampling rate</h3>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
