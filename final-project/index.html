@@ -1,0 +1,133 @@
+<html>
+	<head>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=default'></script>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+		<style>
+			h1 {
+				text-align: center;
+			}
+
+			.container {
+				margin: 0 auto;
+				padding: 60px 20%;
+			}
+
+			figure {
+				text-align: center;
+			}
+
+			img {
+				display: inline-block;
+			}
+
+			body {
+				font-family: 'Inter', sans-serif;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+		<h1>CS184/284A Spring 2025 Final Project Proposal</h1>
+		<div style="text-align: center;">Names: Ryan Kwong, Lemuel Sumardy, Thomas Yeoh, Ziran Zhou</div>
+
+		<br>
+
+		Link to webpage: <a href="https://cs184.eecs.berkeley.edu/sp25">cs184.eecs.berkeley.edu/sp25</a>
+
+		<br>
+
+		Link to GitHub repository: (TODO) <a href="https://cs184.eecs.berkeley.edu/sp25">cs184.eecs.berkeley.edu/sp25</a>
+
+		<!--
+		We've already added one heading per part, to make your write-up as navigable when grading. Please fit your write-up within these sections!
+		-->
+
+		<h2>Overview</h2>
+		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.
+
+		<h2>Goals and Deliverables</h2>
+		The goal of this project is to implement three different forms of shading. These are cel shading, watercolor shading and sketch shading. With each different shader, we will render images that show off the different shaders. We aim to answer the question “How can we implement cel shading, watercolor shading and sketch shading for non-photo realistic rendering”. We will measure the quality of our system by measuring the rendering time of each image and rendering a minimum 3 different images per shader.
+		<br><br>
+		Cel shading, short for celluloid shading, is a technique that gives 3d models the appearance of a 2d drawing. Instead of rendering with gradients and complex lighting, cel shading uses a simplified model of lighting with just a few flat areas of color. This could be one color for the lit area, one color for the shadow and one color for the highlight. Below are some examples of cel shading.
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="clothsim.png" width="400px"/>
+				  <figcaption>Caption goes here.</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="clothsim.png" width="400px"/>
+				  <figcaption>Caption goes here.</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+		<br>
+		Watercolor shading is a non photo-realistic rendering technique that aims at mimicking the soft, fluid look of traditional watercolor paintings. This involves gentle color blending, textured brush strokes, and semi-transparent layers. It can also appear uneven or washed out in places to make it look more handmade. This can be achieved through texture overlays (like grain or color bleeding), noise-based transparency of color, and edge darkening that simulates the pooling of paint. Below are examples of watercolor shading.
+		<br><br>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="clothsim.png" width="400px"/>
+				  <figcaption>Caption goes here.</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="clothsim.png" width="400px"/>
+				  <figcaption>Caption goes here.</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+		<br><br>
+		Sketch shading is a non photo-realistic rendering technique that aims at mimicking the look of hand drawn pencil/pen sketches. This involves hatching, cross-hatching, and rough strokes to create depth and texture, achieved by using procedural line textures, stroke-based shaders, or techniques that detect edges and apply sketch-like marks. Below are some examples of sketch shading.
+		<br><br>
+			<div style="display: flex; flex-direction: column; align-items: center;">
+				<table style="width: 100%; text-align: center; border-collapse: collapse;">
+				  <tr>
+					<td style="text-align: center;">
+					  <img src="clothsim.png" width="400px"/>
+					  <figcaption>Caption goes here.</figcaption>
+					</td>
+					<td style="text-align: center;">
+					  <img src="clothsim.png" width="400px"/>
+					  <figcaption>Caption goes here.</figcaption>
+					</td>
+				  </tr>
+				</table>
+			</div>
+		<h2>What We Hope to Deliver</h2>
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+		<h2>Schedule</h2>
+		<table>
+
+		</table>
+
+		<h2>Resources</h2>
+		<ul>
+			<li>Build off codebase of homework 3</li>
+			<li>Cel shading wikipedia<ul>
+				<li><a href="https://en.wikipedia.org/wiki/Cel_shading">https://en.wikipedia.org/wiki/Cel_shading</a></li>
+			</ul></li>
+			<li>Computer-generated watercolor<ul>
+				<li><a href="https://dl.acm.org/doi/pdf/10.1145/258734.258896">https://dl.acm.org/doi/pdf/10.1145/258734.258896</a></li>
+			</ul></li>
+			<li>Watercolor inspired non photo-realistic rendering for augmented reality<ul>
+				<li><a href="https://faculty.cc.gatech.edu/~turk/my_papers/npr_ar_2008.pdf">https://faculty.cc.gatech.edu/~turk/my_papers/npr_ar_2008.pdf</a></li>
+			</ul></li>
+			<li>Non-Photorealistic Rendering using Watercolor Inspired Textures and Illumination<ul>
+				<li><a href="https://www.dimap.ufrn.br/~motta/dim102/Projetos/NPR/Lume_PG01.pdf">https://www.dimap.ufrn.br/~motta/dim102/Projetos/NPR/Lume_PG01.pdf</a></li>
+			</ul></li>
+			<li>Sketch effect blog: <ul>
+				<li><a href="https://kylehalladay.com/blog/tutorial/2017/02/21/Pencil-Sketch-Effect.html">https://kylehalladay.com/blog/tutorial/2017/02/21/Pencil-Sketch-Effect.html/a></li>
+			</ul></li>
+			<li>Real-time hatching: <ul>
+				<li><a href="https://hhoppe.com/hatching.pdf">https://hhoppe.com/hatching.pdf</a></li>
+			</ul></li>
+		</ul>
+		</div>
+	</body>
+</html>
