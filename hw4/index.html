@@ -89,21 +89,57 @@
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 		<h2>Part 5: Shaders</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-		<h2>(Optional) Part 6: Extra Credit - Additional cloth simulation features!</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-		
-		<h2>Additional Notes (please remove)</h2>
-		<ul>
-			<li>You can also add code if you'd like as so: <code>code code code</code></li>
-			<li>If you'd like to add math equations, 
-				<ul>
-					<li>You can write inline equations like so: \( a^2 + b^2 = c^2 \)</li>
-					<li>You can write display equations like so: \[ a^2 + b^2 = c^2 \]</li>
-				</ul>
-			</li>
-		</ul>
+		<h4>What are vertex and fragment shaders</h4>
+		Vertex shaders, as the name suggests, are used to control the vertices of a model. This is very useful for simulating physics and how a model interacts with the physical environment and itself. A fragment shader, on the other hand, controls how the model is rendered. This allows us to control how a model looks (e.g. specular illumination, ambient lighting, etc.). By combining both vertex and fragment shading, we are able to fully control how a model looks. We can use vertex shading to control the physical geometry of the model and then enhance it with lighting effects from the fragment shader.
+		<br>
+		<h4>Blinn-Phong Shading</h4>
+		Blinn-Phong shading is a shading method to provide specular reflection and ambient lighting to a model. The shading formula is as follows:
+		\[\mathbf{L}=\mathbf{L}_a+\mathbf{L}_d+\mathbf{L}_s\]
+		where
+		\[\mathbf{L}_a = k_a\mathbf{I}_a\]
+		\[\mathbf{L}_d=k_d\frac{\mathbf{I}}{r^2}\max(0, \mathbf{n}\cdot\mathbf{l})\]
+		\[\mathbf{L}_s=k_s\frac{\mathbf{I}}{r^2}\max(0, \mathbf{n}\cdot\mathbf{h})^p\]
+		Given this formula, you can see that Blinn-Phong shading is just the superposition of diffuse shading with an ambient lighting term and a specular lighting term. You can see this effect in the images below:
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="phong_ambient.png" width="400px"/>
+				  <figcaption>Ambient only</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="phong_diffuse.png" width="400px"/>
+				  <figcaption>Diffuse only</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="phong_specular.png" width="400px"/>
+				  <figcaption>Specular only</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="phong_total.png" width="400px"/>
+				  <figcaption>Full Blinn-Phong</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+		<br>
+		<h4>Texture, Bump and Displacement Mapping</h4>
+		Once we have Blinn-Phong shading, we can build off this shader to implement texture mapping to add our own custom textures and even simulate coarseness with bump and displacement mapping. For texture mapping, we can get the map each pixel of the texture image to the pixels being rendered by the program using the <code>texture</code> function. You can see an example of texture mapping below:
+		<br>
+		<h4>Mirror Shading</h4>
+		Another type of shader we built is the mirror shader. The mirror shader essentially takes incoming light from a map of the environment (light that is essentiall infintely far away), and computes the outgoing reflected light ray. This is the result:
+		<figure>
+			<img src="mirror.png" alt="Cloth draped over sphere" style="width: 70%"/>
+			<figcaption>Mirror shader</figcaption>
+		</figure>
+		<h4>Extra Credit: Custom Shader</h4>
+		For our custom shader, we decided to implement a time aspect to it. We added a time counter to  the <code>clothSimulaotr</code> class and passed it to <code>Custom.frag</code> as a uniform. With this new unifrom, we can now vary the shader with time. To create a glowing effect, we used took the regular bump shader effect and superimposed a separate glowing diffuse effect on the edges to create the cool glowing effect. We controlled the glow diffuse value by multiplying it by a \(\sin(ft)\) term so that we got a smooth fading effect. We can see the end result in the gif below:
+		<figure>
+			<img src="CustomShader - Resized.gif" alt="Cloth draped over sphere" style="width: 70%"/>
+			<figcaption>Glowing edge shader effect</figcaption>
+		</figure>
 		</div>
 	</body>
 </html>
