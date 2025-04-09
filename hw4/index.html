@@ -127,6 +127,30 @@
 		<br>
 		<h4>Texture, Bump and Displacement Mapping</h4>
 		Once we have Blinn-Phong shading, we can build off this shader to implement texture mapping to add our own custom textures and even simulate coarseness with bump and displacement mapping. For texture mapping, we can get the map each pixel of the texture image to the pixels being rendered by the program using the <code>texture</code> function. You can see an example of texture mapping below:
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="sphere_bump_16.png" width="400px"/>
+				  <figcaption>Bump <code>-a 16 -o 16</code></figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="sphere_displacement_16.png" width="400px"/>
+				  <figcaption>Displacement <code>-a 16 -o 16</code></figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="sphere_bump_128.png" width="400px"/>
+				  <figcaption>Bump <code>-a 128 -o 128</code></figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="sphere_displacement_128.png" width="400px"/>
+				  <figcaption>Displacement <code>-a 128 -o 128</code></figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
 		<br>
 		<h4>Mirror Shading</h4>
 		Another type of shader we built is the mirror shader. The mirror shader essentially takes incoming light from a map of the environment (light that is essentiall infintely far away), and computes the outgoing reflected light ray. This is the result:
