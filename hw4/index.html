@@ -386,6 +386,14 @@
 		<br>
 		<h4>Texture, Bump and Displacement Mapping</h4>
 		Once we have Blinn-Phong shading, we can build off this shader to implement texture mapping to add our own custom textures and even simulate coarseness with bump and displacement mapping. For texture mapping, we can get the map each pixel of the texture image to the pixels being rendered by the program using the <code>texture</code> function. You can see an example of texture mapping below:
+		<br>
+		<figure>
+			<img src="Images/texture-2.png" alt="Cloth draped over sphere" style="width: 70%"/>
+			<figcaption>Texture shader</figcaption>
+		</figure>
+		<br>
+		With this new texture mapping, we can use the map to add bumps and defects to our models using bump and displacement shading. Bump and displacement shading produce the same effects, but displacement actually edits the physical mesh while bump does not. Thus, when rendering, the texture appears more defined with displacement over bump shading. In both shaders, the textures appear more defined when passing in <code>-a 128 -0 128</code> for coarseness, but you can see that displacement is slightly more defined.
+		<br>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
