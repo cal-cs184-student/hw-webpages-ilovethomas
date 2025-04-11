@@ -292,8 +292,8 @@
 			with the point on the plane.
 	</p>
 	
-	\[Vector3D\ curDiff = pm.position - offsetPoint\]
-	\[Vector3D\ prevDiff = pm.last\_position - offsetPoint\]
+	\[Vector3D\ curDiff = pm.position - this->point\]
+	\[Vector3D\ prevDiff = pm.last\_position - this->point\]
 	\[double\ curPosDist = dot(this\rightarrow normal, curDiff)\]
 	\[double\ prevPosDist = dot(this\rightarrow normal, prevDiff)\]
 	
@@ -357,6 +357,52 @@
 		</table>
 		<h2>Part 4: Handling self-collisions</h2>
 		<h3>Self Collisions Implementation</h3>
+    <p>
+			For self-collision handling, our implementation uses spatial hashing. First, we build a spatial map 
+			by hashing the 3D positions of all point masses into a hash table. The hash function divides the 3D 
+			space into boxes with dimensions \(w \times h \times t\) where:
+	</p>
+	
+	\[w = 3 \cdot \text{width} / \text{num_width_points}\]
+	\[h = 3 \cdot \text{height} / \text{num_height_points}\]
+	\[t = \max(w, h)\]
+	
+	<p>
+			To convert the point's 3D position into one of the boxes, we divide each coordinate by the 
+			corresponding box dimension and take the floor of the result:
+	</p>
+	
+	\[\text{boxI} = \lfloor \text{pos.x} / w \rfloor\]
+	\[\text{boxJ} = \lfloor \text{pos.y} / h \rfloor\]
+	\[\text{boxK} = \lfloor \text{pos.z} / t \rfloor\]
+	
+	<p>
+			This gives us the box coordinates (i, j, k) that identify which box the point belongs to. We then 
+			hash these i, j, k coordinates into a single hash value:
+	</p>
+	
+	\[\text{hash} = \text{boxI} + \text{boxJ} \cdot 73856093 + \text{boxK} \cdot 19349663\]
+	
+	<p>
+			Each box in the hash table contains a vector of point masses that are in that box. When checking 
+			for self-collisions for each point mass, we look up its corresponding hash box and iterate through 
+			all other point masses in that bucket. For each pair, we calculate the distance between them.
+	</p>
+	
+	<p>
+			If the distance is less than twice the cloth thickness, we compute a correction vector to push the 
+			point masses apart:
+	</p>
+	
+	\[\text{correctionVector} += \text{direction} \cdot (2 \cdot \text{thickness} - \text{dist})\]
+	
+	<p>
+			The final correction vector is applied to the point mass's position, scaled by the number of 
+			simulation steps to avoid over-correction:
+	</p>
+	
+	\[\text{correctionVector} = \text{correctionVector} / \text{simulation_steps}\]
+	\[\text{pm.position} = \text{pm.position} + \text{correctionVector}\]
 		<h3>Screenshots of Cloth Falling</h3>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
