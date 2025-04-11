@@ -268,16 +268,28 @@
 		<h3>sphere.json with various ks</h3>
 		<figure>
 			<img src="Images/Part 3/ks_500.png" style="width: 100%"/>
-			<figcaption>Final resting state with ks=500</figcaption>
+			<figcaption>Final resting state with ks = 500 N/m</figcaption>
 		</figure>	
 		<figure>
 			<img src="Images/Part 3/ks_5000.png" style="width: 100%"/>
-			<figcaption>Final resting state with ks=5000</figcaption>
+			<figcaption>Final resting state with ks = 5000 N/m</figcaption>
 		</figure>	
 		<figure>
 			<img src="Images/Part 3/ks_50000.png" style="width: 100%"/>
-			<figcaption>Final resting state with ks=50000</figcaption>
+			<figcaption>Final resting state with ks = 50000 N/m</figcaption>
 		</figure>	
+		<p>As mentioned previously, ks represents the spring constant and represents how stiff
+			as spring is. So the higher the spring constant, the stiffer the spring is.
+			What this means for the cloth is that, the higher the ks, the stiffer
+			the cloth.</p>
+			<p>With a low ks, ks = 500 N/m, the cloth is at its most elastic. The final
+				resting state reflects this by having all of the cloth droop down almost 
+				vertically. There are also many vertical folds. When ks = 5000 N/m, the 
+				cloth becomes more stiff and there are less vertical folds now. The folds
+				also beome less vertical, and start spreading out to the sides more. Finally,
+				when ks = 50000 N/m, there are only a few vertical folds now. The folds are much
+				bigger, and spread out even more to the sides, resisting gravity.
+			</p>
 		<h3>Shaded Cloth</h3>
 		<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			<tr>
@@ -311,42 +323,67 @@
 			<figcaption>End of self-collision</figcaption>
 		</div>		
 		<h3>Varying density and ks</h3>
-		<h4>ks</h4>
+		<h4>Spring Constant (ks)</h4>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
 				  <img src="Images/Part 4/ks-25000-mid.png" width="400px"/>
-				  <figcaption>Mid fall with ks=2500</figcaption>
+				  <figcaption>Mid fall with ks = 2500 N/m</figcaption>
 				</td>
 					<td style="text-align: center;">
 						<img src="Images/Part 4/ks-5000-mid.png" width="400px"/>
-						<figcaption>Mid fall with ks=5000</figcaption>
+						<figcaption>Mid fall with ks = 5000 N/m</figcaption>
 					</td>
 			  </tr>
 			</table>
 			<img src="Images/Part 4/ks-50000-mid.png" width="400px"/>
-			<figcaption>Mid fall with ks=50000</figcaption>
+			<figcaption>Mid fall with ks = 50000 N/m</figcaption>
 		</div>
-		<h4>density</h4>
+		<p>Once again, ks represents the spring constant and represents how stiff
+			as spring is. So the higher the spring constant, the stiffer the spring is.
+			What this means for the cloth is that, the higher the ks, the stiffer
+			the cloth.</p>
+		<p>What this means is that, as ks increases, the more resistant to folds the 
+			cloth becomes. When ks = 2500 N/m, The cloth folds against itself easily and 
+			has the most folds. When ks = 5000 N/m, the cloth becomes slightly stiffer and 
+			the folds become less chaotic. The folds are more 
+			straight as compared to ks = 2500 N/m where the folds were kind of wavy. When ks
+			= 50000 N/m, the cloth is very stiff. The folds are even straighter now and there
+			are only a couple of big folds.
+		</p>
+		<h4>Density</h4>
 
 	<div style="display: flex; flex-direction: column; align-items: center;">
 		<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			<tr>
 			<td style="text-align: center;">
 				<img src="Images/Part 4/dens-1-mid.png" width="400px"/>
-				<figcaption>Mid fall with density=1</figcaption>
+				<figcaption>Mid fall with density = 1 g/cm^2</figcaption>
 			</td>
 				<td style="text-align: center;">
 					<img src="Images/Part 4/dens-15-mid.png" width="400px"/>
-					<figcaption>Mid fall with density=15</figcaption>
+					<figcaption>Mid fall with density = 15 g/cm^2</figcaption>
 				</td>
 			</tr>
 		</table>
 		<td style="text-align: center;">
 			<img src="Images/Part 4/dens-30-mid.png" width="400px"/>
-			<figcaption>Mid fall with density=30</figcaption>
+			<figcaption>Mid fall with density = 30 g/cm^2</figcaption>
 	</div>
+	<p>As mentioned previously, density plays a role in calculating the masspoints' acceleration.
+		This is because According to Newton's laws, mass is given by 
+		<em>m = &rho; &middot; V</em> and acceleration by <em>F = m/a</em>,
+		where &rho; is equal to density. This means that the greater the density,
+		the greater the force, because acceleration is constant.
+	</p>
+	<p>Density's impact on the cloth's self collisions is the opposite of the spring constant's impact.
+		As density increases, there are more folds and wrinkles in the cloth. The cloth is calmest when
+		density is set at 1 g/cm^2. The folds are few and large, and there are barely any
+		wrinkles. When density = 15 g/cm^2, the folds become more and smaller, with wrinkles
+		starting to appear. When density is equal to 30 g/cm^2, it has the most folds. The folds
+		are no longer smooth and relatively horizontal. They also have wrinkles in them.
+	</p>
 		<h2>Part 5: Shaders</h2>
 		<h4>What are vertex and fragment shaders</h4>
 		Vertex shaders, as the name suggests, are used to control the vertices of a model. This is very useful for simulating physics and how a model interacts with the physical environment and itself. A fragment shader, on the other hand, controls how the model is rendered. This allows us to control how a model looks (e.g. specular illumination, ambient lighting, etc.). By combining both vertex and fragment shading, we are able to fully control how a model looks. We can use vertex shading to control the physical geometry of the model and then enhance it with lighting effects from the fragment shader.
