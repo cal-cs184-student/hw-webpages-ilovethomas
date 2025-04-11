@@ -1,78 +1,78 @@
 <html>
-	<head>
-		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=default'></script>
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-		<style>
-			h1 {
-				text-align: center;
-			}
 
-			.container {
-				margin: 0 auto;
-				padding: 60px 20%;
-			}
+<head>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=default'></script>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+	<style>
+		h1 {
+			text-align: center;
+		}
 
-			figure {
-				text-align: center;
-			}
+		.container {
+			margin: 0 auto;
+			padding: 60px 20%;
+		}
 
-			img {
-				display: inline-block;
-			}
+		figure {
+			text-align: center;
+		}
 
-			body {
-				font-family: 'Inter', sans-serif;
-			}
-		</style>
-	</head>
-	<body>
-		<div class="container">
+		img {
+			display: inline-block;
+		}
+
+		body {
+			font-family: 'Inter', sans-serif;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
 		<h1>CS184/284A Spring 2025 Homework 4 Write-Up</h1>
 		<div style="text-align: center;">Names: </div>
 
 		<br>
-		Link to webpage: <a href="https://cal-cs184-student.github.io/hw-webpages-ilovethomas/hw4/">cal-cs184-student.github.io/hw-webpages-ilovethomas/hw4/</a>
+		Link to webpage: <a
+			href="https://cal-cs184-student.github.io/hw-webpages-ilovethomas/hw4/">cal-cs184-student.github.io/hw-webpages-ilovethomas/hw4/</a>
 		<br>
-		Link to GitHub repository: <a href="https://github.com/cal-cs184-student/sp25-hw3-ilovethomas-4">github.com/cal-cs184-student/sp25-hw3-ilovethomas-4</a>
-
-		<figure>
-			<img src="Images/clothsim.png" alt="Cloth draped over sphere" style="width:70%"/>
-			<figcaption>You can add images with captions!</figcaption>
-		</figure>
+		Link to GitHub repository: <a
+			href="https://github.com/cal-cs184-student/sp25-hw3-ilovethomas-4">github.com/cal-cs184-student/sp25-hw3-ilovethomas-4</a>
 
 		<!--
 		We've already added one heading per part, to make your write-up as navigable when grading. Please fit your write-up within these sections!
 		-->
 
 		<h2>Overview</h2>
-		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.
+		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share
+		your thoughts on what interesting things you've learned from completing the homework.
 
 		<h2>Part 1: Masses and springs</h2>
 		<h3>Cloth Wireframe</h3>
 		<figure>
-			<img src="Images/Part 1/2pin_ortho.png" style="width: 100%"/>
+			<img src="Images/Part 1/2pin_ortho.png" style="width: 100%" />
 			<figcaption>Cloth with 2 pins and all constraints</figcaption>
 		</figure>
 		<figure>
-			<img src="Images/Part 1/all_constrains.png" style="width: 100%"/>
+			<img src="Images/Part 1/all_constrains.png" style="width: 100%" />
 			<figcaption>Cloth with 2 pins and all constraints</figcaption>
 		</figure>
 		<figure>
-			<img src="Images/Part 1/2pin_sim.png" style="width: 100%"/>
+			<img src="Images/Part 1/2pin_sim.png" style="width: 100%" />
 			<figcaption>Cloth with 2 pins and all constraints</figcaption>
 		</figure>
 
 		<h3>Cloth Wireframe with Varying Constraints</h3>
 		<figure>
-			<img src="Images/Part 1/no-shearing.png" style="width: 100%"/>
+			<img src="Images/Part 1/no-shearing.png" style="width: 100%" />
 			<figcaption>No shearing constraints (structural & bending)</figcaption>
 		</figure>
 		<figure>
-			<img src="Images/Part 1/only-shearing.png" style="width: 100%"/>
+			<img src="Images/Part 1/only-shearing.png" style="width: 100%" />
 			<figcaption>Only shearing constraints (shearing)</figcaption>
 		</figure>
 		<figure>
-			<img src="Images/Part 1/all_constrains.png" style="width: 100%"/>
+			<img src="Images/Part 1/all_constrains.png" style="width: 100%" />
 			<figcaption>All constraints (structural, shearing, & bending)</figcaption>
 		</figure>
 
@@ -107,36 +107,36 @@
 		<h4>Spring Constant(ks)</h4>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
-			  <tr>
-				<td style="text-align: center;">
-				  <img src="Images/Part 2/ks-500-mid.png" width="400px"/>
-				  <figcaption>Mid fall with ks = 500 N/m</figcaption>
-				</td>
-				<td style="text-align: center;">
-				  <img src="Images/Part 2/ks-500-end.png" width="400px"/>
-				  <figcaption>Rest state with ks = 500 N/m</figcaption>
-				</td>
-			  </tr>
-			  <tr>
+				<tr>
 					<td style="text-align: center;">
-						<img src="Images/Part 2/ks-5000-mid.png" width="400px"/>
+						<img src="Images/Part 2/ks-500-mid.png" width="400px" />
+						<figcaption>Mid fall with ks = 500 N/m</figcaption>
+					</td>
+					<td style="text-align: center;">
+						<img src="Images/Part 2/ks-500-end.png" width="400px" />
+						<figcaption>Rest state with ks = 500 N/m</figcaption>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: center;">
+						<img src="Images/Part 2/ks-5000-mid.png" width="400px" />
 						<figcaption>Mid fall with ks = 5000 N/m</figcaption>
 					</td>
 					<td style="text-align: center;">
-						<img src="Images/Part 2/ks-5000-end.png" width="400px"/>
+						<img src="Images/Part 2/ks-5000-end.png" width="400px" />
 						<figcaption>Rest state with ks = 5000 N/m</figcaption>
 					</td>
-			  </tr>
+				</tr>
 				<tr>
 					<td style="text-align: center;">
-						<img src="Images/Part 2/ks-50000-mid.png" width="400px"/>
+						<img src="Images/Part 2/ks-50000-mid.png" width="400px" />
 						<figcaption>Mid fall with ks = 50000 N/m</figcaption>
 					</td>
 					<td style="text-align: center;">
-						<img src="Images/Part 2/ks-50000-end.png" width="400px"/>
+						<img src="Images/Part 2/ks-50000-end.png" width="400px" />
 						<figcaption>Rest state with ks = 50000 N/m</figcaption>
 					</td>
-					</tr>
+				</tr>
 			</table>
 		</div>
 		<p>ks represents the spring constant and represents how stiff
@@ -145,51 +145,51 @@
 			the cloth.
 		</p>
 		<p>
-			This can be seen in the photos above. When ks = 500 N/m, the spring is 
+			This can be seen in the photos above. When ks = 500 N/m, the spring is
 			at its most elastic, which is why the cloth has the most folds and wrinkles as it falls and at its rest state
 			out of all the runs. At ks = 5000 N/m, the cloth has only subtle folds as it falls
 			and only loses the smaller folds that were in ks = 500 N/m's rest state. At
 			ks = 50000 N/m, there are almost no folds at all when it is mid falling and only
-			one fold at its rest state. The curvature at the top of the cloth is also much less 
-			compared to the previous runs. 
+			one fold at its rest state. The curvature at the top of the cloth is also much less
+			compared to the previous runs.
 		</p>
 		<h4>Density</h4>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
-			  <tr>
-				<td style="text-align: center;">
-				  <img src="Images/Part 2/dens-1-mid.png" width="400px"/>
-				  <figcaption>Mid fall with density = 1 g/cm^2</figcaption>
-				</td>
-				<td style="text-align: center;">
-				  <img src="Images/Part 2/dens-1-end.png" width="400px"/>
-				  <figcaption>Rest state with density = 1 g/cm^2</figcaption>
-				</td>
-			  </tr>
-			  <tr>
+				<tr>
 					<td style="text-align: center;">
-						<img src="Images/Part 2/dens-15-mid.png" width="400px"/>
+						<img src="Images/Part 2/dens-1-mid.png" width="400px" />
+						<figcaption>Mid fall with density = 1 g/cm^2</figcaption>
+					</td>
+					<td style="text-align: center;">
+						<img src="Images/Part 2/dens-1-end.png" width="400px" />
+						<figcaption>Rest state with density = 1 g/cm^2</figcaption>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: center;">
+						<img src="Images/Part 2/dens-15-mid.png" width="400px" />
 						<figcaption>Mid fall with density = 15 g/cm^2</figcaption>
 					</td>
 					<td style="text-align: center;">
-						<img src="Images/Part 2/dens-15-end.png" width="400px"/>
+						<img src="Images/Part 2/dens-15-end.png" width="400px" />
 						<figcaption>Rest state with density = 15 g/cm^2</figcaption>
 					</td>
-			  </tr>
+				</tr>
 				<tr>
 					<td style="text-align: center;">
-						<img src="Images/Part 2/dens-50-mid.png" width="400px"/>
+						<img src="Images/Part 2/dens-50-mid.png" width="400px" />
 						<figcaption>Mid fall with density = 50 g/cm^2</figcaption>
 					</td>
 					<td style="text-align: center;">
-						<img src="Images/Part 2/dens-50-end.png" width="400px"/>
+						<img src="Images/Part 2/dens-50-end.png" width="400px" />
 						<figcaption>Rest state with density = 50 g/cm^2</figcaption>
 					</td>
-					</tr>
+				</tr>
 			</table>
 		</div>
 		<p>Density plays a role in calculating the masspoints' acceleration.
-			This is because According to Newton's laws, mass is given by 
+			This is because According to Newton's laws, mass is given by
 			<em>m = &rho; &middot; V</em> and acceleration by <em>F = m/a</em>,
 			where &rho; is equal to density. This means that the greater the density,
 			the greater the force, because acceleration is constant.
@@ -206,36 +206,36 @@
 		<h4>Damping</h4>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
-			  <tr>
-				<td style="text-align: center;">
-				  <img src="Images/Part 2/damp-0-mid.png" width="400px"/>
-				  <figcaption>Mid fall with damping = 0%</figcaption>
-				</td>
-				<td style="text-align: center;">
-				  <img src="Images/Part 2/damp-0-end.png" width="400px"/>
-				  <figcaption>Fallen state with damping = 0%</figcaption>
-				</td>
-			  </tr>
-			  <tr>
+				<tr>
 					<td style="text-align: center;">
-						<img src="Images/Part 2/damp-0.2-mid.png" width="400px"/>
+						<img src="Images/Part 2/damp-0-mid.png" width="400px" />
+						<figcaption>Mid fall with damping = 0%</figcaption>
+					</td>
+					<td style="text-align: center;">
+						<img src="Images/Part 2/damp-0-end.png" width="400px" />
+						<figcaption>Fallen state with damping = 0%</figcaption>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: center;">
+						<img src="Images/Part 2/damp-0.2-mid.png" width="400px" />
 						<figcaption>Mid fall with damping = 0.2%</figcaption>
 					</td>
 					<td style="text-align: center;">
-						<img src="Images/Part 2/damp-0.2-end.png" width="400px"/>
+						<img src="Images/Part 2/damp-0.2-end.png" width="400px" />
 						<figcaption>Rest state with damping = 0.2%</figcaption>
 					</td>
-			  </tr>
+				</tr>
 				<tr>
 					<td style="text-align: center;">
-						<img src="Images/Part 2/damp-1-mid.png" width="400px"/>
+						<img src="Images/Part 2/damp-1-mid.png" width="400px" />
 						<figcaption>Mid fall with damping = 1%</figcaption>
 					</td>
 					<td style="text-align: center;">
-						<img src="Images/Part 2/damp-1-end.png" width="400px"/>
+						<img src="Images/Part 2/damp-1-end.png" width="400px" />
 						<figcaption>Rest state with damping = 1%</figcaption>
 					</td>
-					</tr>
+				</tr>
 			</table>
 		</div>
 		<p>Damping is the process where energy is lost in the environment.
@@ -246,61 +246,113 @@
 		<p>This loss of energy can be observed with the various runs of the pinned
 			cloth. When d is equal to 0%, the mass points, dont lose energy, which is why
 			as it is falling, there is much more vibrations and wrinkles,
-			indicating more energy. It also falls very fast, almost instantly, and continues to 
+			indicating more energy. It also falls very fast, almost instantly, and continues to
 			oscillate, never coming to rest. As d goes up, the amoount of wrinkles decreases. When
 			d = 0.2%, the cloth has fewer sharp wrinkles compared to when d = 0%, and the final rest
 			state has softer folds. The extreme is when d = 1%. As it is falling, it appears to
-			 be almost completely smooth and when it is at rest, it lacks the subtle folds
-			 that d = 0.2% had. It falls much slower and comes to rest without any extra swinging.
+			be almost completely smooth and when it is at rest, it lacks the subtle folds
+			that d = 0.2% had. It falls much slower and comes to rest without any extra swinging.
 		<h3>Cloth with 4 Pins in its Resting State (Default Parameters)</h3>
 		<figure>
-			<img src="Images/Part 2/4_pin_wireframe.png" style="width: 100%"/>
+			<img src="Images/Part 2/4_pin_wireframe.png" style="width: 100%" />
 			<figcaption>Wireframe Cloth with 4 Pins
 			</figcaption>
-		</figure>	
+		</figure>
 		<figure>
-			<img src="Images/Part 2/4_pin_normal.png" style="width: 100%"/>
+			<img src="Images/Part 2/4_pin_normal.png" style="width: 100%" />
 			<figcaption>Normals Cloth with 4 Pins
 			</figcaption>
-		</figure>	
+		</figure>
 		<h2>Part 3: Handling collisions with other objects</h2>
 		<h3>Implementation of collisions of planes and spheres</h3>
+		<h4>
+			Spheres
+		</h4>
+		<p>
+			For sphere collision handling, our implementation is as follows.
+			First we calculate the vector difference between the point mass position
+			and the sphere's origin, or center. If this difference's magnitude
+			is greater than the sphere's radius, there's no collision, and the
+			function returns immediately. If the difference's magnitude is less than
+			or equal to the sphere's radius, a collision is detected, and the code continues on.
+			We then calculate a unit direction vector from
+			the sphere's origin to the point mass.
+			This unit vector is used to find the tangent point on the sphere's surface by
+			extending from the origin along the direction vector by the sphere's radius.
+			The correction vector is then calculated as the
+			difference between this tangent point and the point mass's previous position.
+			Finally, the point mass's position is
+			updated by adding this correction vector to its previous position, scaled by 1 - friction.
+		</p>
+		<h4>Planes</h4>
+		<p>
+			For plane collision handling, we first determine if a collision has occured by calculating 
+			the signed distances from both the current and previous point mass positions to the plane. 
+			This is done using a dot product with the normal vector of the plane and subtracting position 
+			with the point on the plane.
+	</p>
+	
+	\[Vector3D\ curDiff = pm.position - offsetPoint\]
+	\[Vector3D\ prevDiff = pm.last\_position - offsetPoint\]
+	\[double\ curPosDist = dot(this\rightarrow normal, curDiff)\]
+	\[double\ prevPosDist = dot(this\rightarrow normal, prevDiff)\]
+	
+	<p>
+			If both distances have the same sign, this means both positions are on the same side of the plane, 
+			and there is no collision. If a collision is detected, we then compute the fraction t which is where the mass point intersects the plane. This is done with 
+	</p>
+	
+	\[t = -prevPosDist / (curPosDist - prevPosDist)\]
+	
+	<p>
+			where prevPosDist and curPosDist are the signed distances from above. 
+			The intersection point is then found by the plane using linear interpolation with t where 
+	</p>
+	
+	\[tangentPoint = pm.last\_position + t * (pm.position - pm.last\_position)\]
+	
+	<p>
+			The correction vector is now calculated as the difference between this tangent point and the previous position, with a 
+			small additional offset in the appropriate normal direction to prevent clipping with the plane.  
+			Finally, the point mass's position is updated by adding the scaled correction vector to its previous 
+			position, where the scaling factor accounts for friction.
+	</p>
 		<h3>sphere.json with various ks</h3>
 		<figure>
-			<img src="Images/Part 3/ks_500.png" style="width: 100%"/>
+			<img src="Images/Part 3/ks_500.png" style="width: 100%" />
 			<figcaption>Final resting state with ks = 500 N/m</figcaption>
-		</figure>	
+		</figure>
 		<figure>
-			<img src="Images/Part 3/ks_5000.png" style="width: 100%"/>
+			<img src="Images/Part 3/ks_5000.png" style="width: 100%" />
 			<figcaption>Final resting state with ks = 5000 N/m</figcaption>
-		</figure>	
+		</figure>
 		<figure>
-			<img src="Images/Part 3/ks_50000.png" style="width: 100%"/>
+			<img src="Images/Part 3/ks_50000.png" style="width: 100%" />
 			<figcaption>Final resting state with ks = 50000 N/m</figcaption>
-		</figure>	
+		</figure>
 		<p>As mentioned previously, ks represents the spring constant and represents how stiff
 			as spring is. So the higher the spring constant, the stiffer the spring is.
 			What this means for the cloth is that, the higher the ks, the stiffer
 			the cloth.</p>
-			<p>With a low ks, ks = 500 N/m, the cloth is at its most elastic. The final
-				resting state reflects this by having all of the cloth droop down almost 
-				vertically. There are also many vertical folds. When ks = 5000 N/m, the 
-				cloth becomes more stiff and there are less vertical folds now. The folds
-				also beome less vertical, and start spreading out to the sides more. Finally,
-				when ks = 50000 N/m, there are only a few vertical folds now. The folds are much
-				bigger, and spread out even more to the sides, resisting gravity.
-			</p>
+		<p>With a low ks, ks = 500 N/m, the cloth is at its most elastic. The final
+			resting state reflects this by having all of the cloth droop down almost
+			vertically. There are also many vertical folds. When ks = 5000 N/m, the
+			cloth becomes more stiff and there are less vertical folds now. The folds
+			also beome less vertical, and start spreading out to the sides more. Finally,
+			when ks = 50000 N/m, there are only a few vertical folds now. The folds are much
+			bigger, and spread out even more to the sides, resisting gravity.
+		</p>
 		<h3>Shaded Cloth</h3>
 		<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			<tr>
-			<td style="text-align: center;">
-				<img src="Images/Part 3/plane.png" style="width: 100%"/>
-				<figcaption>Wireframe cloth at rest on plane</figcaption>
-			</td>
-			<td style="text-align: center;">
-				<img src="Images/Part 3/plane-shaded.png" width="100%"/>
-				<figcaption>Shaded cloth at rest on plane</figcaption>
-			</td>
+				<td style="text-align: center;">
+					<img src="Images/Part 3/plane.png" style="width: 100%" />
+					<figcaption>Wireframe cloth at rest on plane</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="Images/Part 3/plane-shaded.png" width="100%" />
+					<figcaption>Shaded cloth at rest on plane</figcaption>
+				</td>
 			</tr>
 		</table>
 		<h2>Part 4: Handling self-collisions</h2>
@@ -308,166 +360,188 @@
 		<h3>Screenshots of Cloth Falling</h3>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
-			  <tr>
-				<td style="text-align: center;">
-				  <img src="Images/Part 4/initial.png" width="400px"/>
-				  <figcaption>Early, initial self-collision</figcaption>
-				</td>
-				<td style="text-align: center;">
-				  <img src="Images/Part 4/middle.png" width="400px"/>
-				  <figcaption>Middle of self-collision</figcaption>
-				</td>
-			  </tr>
+				<tr>
+					<td style="text-align: center;">
+						<img src="Images/Part 4/initial.png" width="400px" />
+						<figcaption>Early, initial self-collision</figcaption>
+					</td>
+					<td style="text-align: center;">
+						<img src="Images/Part 4/middle.png" width="400px" />
+						<figcaption>Middle of self-collision</figcaption>
+					</td>
+				</tr>
 			</table>
-			<img src="Images/Part 4/end.png" width="400px"/>
+			<img src="Images/Part 4/end.png" width="400px" />
 			<figcaption>End of self-collision</figcaption>
-		</div>		
+		</div>
 		<h3>Varying density and ks</h3>
 		<h4>Spring Constant (ks)</h4>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
-			  <tr>
-				<td style="text-align: center;">
-				  <img src="Images/Part 4/ks-25000-mid.png" width="400px"/>
-				  <figcaption>Mid fall with ks = 2500 N/m</figcaption>
-				</td>
+				<tr>
 					<td style="text-align: center;">
-						<img src="Images/Part 4/ks-5000-mid.png" width="400px"/>
+						<img src="Images/Part 4/ks-25000-mid.png" width="400px" />
+						<figcaption>Mid fall with ks = 2500 N/m</figcaption>
+					</td>
+					<td style="text-align: center;">
+						<img src="Images/Part 4/ks-5000-mid.png" width="400px" />
 						<figcaption>Mid fall with ks = 5000 N/m</figcaption>
 					</td>
-			  </tr>
+				</tr>
 			</table>
-			<img src="Images/Part 4/ks-50000-mid.png" width="400px"/>
+			<img src="Images/Part 4/ks-50000-mid.png" width="400px" />
 			<figcaption>Mid fall with ks = 50000 N/m</figcaption>
 		</div>
 		<p>Once again, ks represents the spring constant and represents how stiff
 			as spring is. So the higher the spring constant, the stiffer the spring is.
 			What this means for the cloth is that, the higher the ks, the stiffer
 			the cloth.</p>
-		<p>What this means is that, as ks increases, the more resistant to folds the 
-			cloth becomes. When ks = 2500 N/m, The cloth folds against itself easily and 
-			has the most folds. When ks = 5000 N/m, the cloth becomes slightly stiffer and 
-			the folds become less chaotic. The folds are more 
+		<p>What this means is that, as ks increases, the more resistant to folds the
+			cloth becomes. When ks = 2500 N/m, The cloth folds against itself easily and
+			has the most folds. When ks = 5000 N/m, the cloth becomes slightly stiffer and
+			the folds become less chaotic. The folds are more
 			straight as compared to ks = 2500 N/m where the folds were kind of wavy. When ks
 			= 50000 N/m, the cloth is very stiff. The folds are even straighter now and there
 			are only a couple of big folds.
 		</p>
 		<h4>Density</h4>
 
-	<div style="display: flex; flex-direction: column; align-items: center;">
-		<table style="width: 100%; text-align: center; border-collapse: collapse;">
-			<tr>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+				<tr>
+					<td style="text-align: center;">
+						<img src="Images/Part 4/dens-1-mid.png" width="400px" />
+						<figcaption>Mid fall with density = 1 g/cm^2</figcaption>
+					</td>
+					<td style="text-align: center;">
+						<img src="Images/Part 4/dens-15-mid.png" width="400px" />
+						<figcaption>Mid fall with density = 15 g/cm^2</figcaption>
+					</td>
+				</tr>
+			</table>
 			<td style="text-align: center;">
-				<img src="Images/Part 4/dens-1-mid.png" width="400px"/>
-				<figcaption>Mid fall with density = 1 g/cm^2</figcaption>
-			</td>
-				<td style="text-align: center;">
-					<img src="Images/Part 4/dens-15-mid.png" width="400px"/>
-					<figcaption>Mid fall with density = 15 g/cm^2</figcaption>
-				</td>
-			</tr>
-		</table>
-		<td style="text-align: center;">
-			<img src="Images/Part 4/dens-30-mid.png" width="400px"/>
-			<figcaption>Mid fall with density = 30 g/cm^2</figcaption>
-	</div>
-	<p>As mentioned previously, density plays a role in calculating the masspoints' acceleration.
-		This is because According to Newton's laws, mass is given by 
-		<em>m = &rho; &middot; V</em> and acceleration by <em>F = m/a</em>,
-		where &rho; is equal to density. This means that the greater the density,
-		the greater the force, because acceleration is constant.
-	</p>
-	<p>Density's impact on the cloth's self collisions is the opposite of the spring constant's impact.
-		As density increases, there are more folds and wrinkles in the cloth. The cloth is calmest when
-		density is set at 1 g/cm^2. The folds are few and large, and there are barely any
-		wrinkles. When density = 15 g/cm^2, the folds become more and smaller, with wrinkles
-		starting to appear. When density is equal to 30 g/cm^2, it has the most folds. The folds
-		are no longer smooth and relatively horizontal. They also have wrinkles in them.
-	</p>
+				<img src="Images/Part 4/dens-30-mid.png" width="400px" />
+				<figcaption>Mid fall with density = 30 g/cm^2</figcaption>
+		</div>
+		<p>As mentioned previously, density plays a role in calculating the masspoints' acceleration.
+			This is because According to Newton's laws, mass is given by
+			<em>m = &rho; &middot; V</em> and acceleration by <em>F = m/a</em>,
+			where &rho; is equal to density. This means that the greater the density,
+			the greater the force, because acceleration is constant.
+		</p>
+		<p>Density's impact on the cloth's self collisions is the opposite of the spring constant's impact.
+			As density increases, there are more folds and wrinkles in the cloth. The cloth is calmest when
+			density is set at 1 g/cm^2. The folds are few and large, and there are barely any
+			wrinkles. When density = 15 g/cm^2, the folds become more and smaller, with wrinkles
+			starting to appear. When density is equal to 30 g/cm^2, it has the most folds. The folds
+			are no longer smooth and relatively horizontal. They also have wrinkles in them.
+		</p>
 		<h2>Part 5: Shaders</h2>
 		<h4>What are vertex and fragment shaders</h4>
-		Vertex shaders, as the name suggests, are used to control the vertices of a model. This is very useful for simulating physics and how a model interacts with the physical environment and itself. A fragment shader, on the other hand, controls how the model is rendered. This allows us to control how a model looks (e.g. specular illumination, ambient lighting, etc.). By combining both vertex and fragment shading, we are able to fully control how a model looks. We can use vertex shading to control the physical geometry of the model and then enhance it with lighting effects from the fragment shader.
+		Vertex shaders, as the name suggests, are used to control the vertices of a model. This is very useful for
+		simulating physics and how a model interacts with the physical environment and itself. A fragment shader, on the
+		other hand, controls how the model is rendered. This allows us to control how a model looks (e.g. specular
+		illumination, ambient lighting, etc.). By combining both vertex and fragment shading, we are able to fully control
+		how a model looks. We can use vertex shading to control the physical geometry of the model and then enhance it with
+		lighting effects from the fragment shader.
 		<br>
 		<h4>Blinn-Phong Shading</h4>
-		Blinn-Phong shading is a shading method to provide specular reflection and ambient lighting to a model. The shading formula is as follows:
+		Blinn-Phong shading is a shading method to provide specular reflection and ambient lighting to a model. The shading
+		formula is as follows:
 		\[\mathbf{L}=\mathbf{L}_a+\mathbf{L}_d+\mathbf{L}_s\]
 		where
 		\[\mathbf{L}_a = k_a\mathbf{I}_a\]
 		\[\mathbf{L}_d=k_d\frac{\mathbf{I}}{r^2}\max(0, \mathbf{n}\cdot\mathbf{l})\]
 		\[\mathbf{L}_s=k_s\frac{\mathbf{I}}{r^2}\max(0, \mathbf{n}\cdot\mathbf{h})^p\]
-		Given this formula, you can see that Blinn-Phong shading is just the superposition of diffuse shading with an ambient lighting term and a specular lighting term. You can see this effect in the images below:
+		Given this formula, you can see that Blinn-Phong shading is just the superposition of diffuse shading with an
+		ambient lighting term and a specular lighting term. You can see this effect in the images below:
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
-			  <tr>
-				<td style="text-align: center;">
-				  <img src="Images/phong_ambient.png" width="400px"/>
-				  <figcaption>Ambient only</figcaption>
-				</td>
-				<td style="text-align: center;">
-				  <img src="Images/phong_diffuse.png" width="400px"/>
-				  <figcaption>Diffuse only</figcaption>
-				</td>
-			  </tr>
-			  <tr>
-				<td style="text-align: center;">
-				  <img src="Images/phong_specular.png" width="400px"/>
-				  <figcaption>Specular only</figcaption>
-				</td>
-				<td style="text-align: center;">
-				  <img src="Images/phong_total.png" width="400px"/>
-				  <figcaption>Full Blinn-Phong</figcaption>
-				</td>
-			  </tr>
+				<tr>
+					<td style="text-align: center;">
+						<img src="Images/phong_ambient.png" width="400px" />
+						<figcaption>Ambient only</figcaption>
+					</td>
+					<td style="text-align: center;">
+						<img src="Images/phong_diffuse.png" width="400px" />
+						<figcaption>Diffuse only</figcaption>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: center;">
+						<img src="Images/phong_specular.png" width="400px" />
+						<figcaption>Specular only</figcaption>
+					</td>
+					<td style="text-align: center;">
+						<img src="Images/phong_total.png" width="400px" />
+						<figcaption>Full Blinn-Phong</figcaption>
+					</td>
+				</tr>
 			</table>
 		</div>
 		<br>
 		<h4>Texture, Bump and Displacement Mapping</h4>
-		Once we have Blinn-Phong shading, we can build off this shader to implement texture mapping to add our own custom textures and even simulate coarseness with bump and displacement mapping. For texture mapping, we can get the map each pixel of the texture image to the pixels being rendered by the program using the <code>texture</code> function. You can see an example of texture mapping below:
+		Once we have Blinn-Phong shading, we can build off this shader to implement texture mapping to add our own custom
+		textures and even simulate coarseness with bump and displacement mapping. For texture mapping, we can get the map
+		each pixel of the texture image to the pixels being rendered by the program using the <code>texture</code> function.
+		You can see an example of texture mapping below:
 		<br>
 		<figure>
-			<img src="Images/texture-2.png" alt="Cloth draped over sphere" style="width: 70%"/>
+			<img src="Images/texture-2.png" alt="Cloth draped over sphere" style="width: 70%" />
 			<figcaption>Texture shader</figcaption>
 		</figure>
 		<br>
-		With this new texture mapping, we can use the map to add bumps and defects to our models using bump and displacement shading. Bump and displacement shading produce the same effects, but displacement actually edits the physical mesh while bump does not. Thus, when rendering, the texture appears more defined with displacement over bump shading. In both shaders, the textures appear more defined when passing in <code>-a 128 -0 128</code> for coarseness, but you can see that displacement is slightly more defined.
+		With this new texture mapping, we can use the map to add bumps and defects to our models using bump and displacement
+		shading. Bump and displacement shading produce the same effects, but displacement actually edits the physical mesh
+		while bump does not. Thus, when rendering, the texture appears more defined with displacement over bump shading. In
+		both shaders, the textures appear more defined when passing in <code>-a 128 -0 128</code> for coarseness, but you
+		can see that displacement is slightly more defined.
 		<br>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
-			  <tr>
-				<td style="text-align: center;">
-				  <img src="Images/sphere_bump_16.png" width="400px"/>
-				  <figcaption>Bump <code>-a 16 -o 16</code></figcaption>
-				</td>
-				<td style="text-align: center;">
-				  <img src="Images/sphere_displacement_16.png" width="400px"/>
-				  <figcaption>Displacement <code>-a 16 -o 16</code></figcaption>
-				</td>
-			  </tr>
-			  <tr>
-				<td style="text-align: center;">
-				  <img src="Images/sphere_bump_128.png" width="400px"/>
-				  <figcaption>Bump <code>-a 128 -o 128</code></figcaption>
-				</td>
-				<td style="text-align: center;">
-				  <img src="Images/sphere_displacement_128.png" width="400px"/>
-				  <figcaption>Displacement <code>-a 128 -o 128</code></figcaption>
-				</td>
-			  </tr>
+				<tr>
+					<td style="text-align: center;">
+						<img src="Images/sphere_bump_16.png" width="400px" />
+						<figcaption>Bump <code>-a 16 -o 16</code></figcaption>
+					</td>
+					<td style="text-align: center;">
+						<img src="Images/sphere_displacement_16.png" width="400px" />
+						<figcaption>Displacement <code>-a 16 -o 16</code></figcaption>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: center;">
+						<img src="Images/sphere_bump_128.png" width="400px" />
+						<figcaption>Bump <code>-a 128 -o 128</code></figcaption>
+					</td>
+					<td style="text-align: center;">
+						<img src="Images/sphere_displacement_128.png" width="400px" />
+						<figcaption>Displacement <code>-a 128 -o 128</code></figcaption>
+					</td>
+				</tr>
 			</table>
 		</div>
 		<br>
 		<h4>Mirror Shading</h4>
-		Another type of shader we built is the mirror shader. The mirror shader essentially takes incoming light from a map of the environment (light that is essentiall infintely far away), and computes the outgoing reflected light ray. This is the result:
+		Another type of shader we built is the mirror shader. The mirror shader essentially takes incoming light from a map
+		of the environment (light that is essentiall infintely far away), and computes the outgoing reflected light ray.
+		This is the result:
 		<figure>
-			<img src="Images/mirror.png" alt="Cloth draped over sphere" style="width: 70%"/>
+			<img src="Images/mirror.png" alt="Cloth draped over sphere" style="width: 70%" />
 			<figcaption>Mirror shader</figcaption>
 		</figure>
 		<h4>Extra Credit: Custom Shader</h4>
-		For our custom shader, we decided to implement a time aspect to it. We added a time counter to  the <code>clothSimulaotr</code> class and passed it to <code>Custom.frag</code> as a uniform. With this new unifrom, we can now vary the shader with time. To create a glowing effect, we used took the regular bump shader effect and superimposed a separate glowing diffuse effect on the edges to create the cool glowing effect. We controlled the glow diffuse value by multiplying it by a \(\sin(ft)\) term so that we got a smooth fading effect. We can see the end result in the gif below:
+		For our custom shader, we decided to implement a time aspect to it. We added a time counter to the
+		<code>clothSimulaotr</code> class and passed it to <code>Custom.frag</code> as a uniform. With this new unifrom, we
+		can now vary the shader with time. To create a glowing effect, we used took the regular bump shader effect and
+		superimposed a separate glowing diffuse effect on the edges to create the cool glowing effect. We controlled the
+		glow diffuse value by multiplying it by a \(\sin(ft)\) term so that we got a smooth fading effect. We can see the
+		end result in the gif below:
 		<figure>
-			<img src="Images/CustomShader - Resized.gif" alt="Cloth draped over sphere" style="width: 70%"/>
+			<img src="Images/CustomShader - Resized.gif" alt="Cloth draped over sphere" style="width: 70%" />
 			<figcaption>Glowing edge shader effect</figcaption>
 		</figure>
-		</div>
-	</body>
+	</div>
+</body>
+
 </html>
