@@ -104,112 +104,155 @@
 
 		<h2>Part 2: Simulation via numerical integration</h2>
 		<h3>Experimenting with parameters of the simulation</h3>
-		<h4>ks</h4>
+		<h4>Spring Constant(ks)</h4>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
 				  <img src="Images/Part 2/ks-500-mid.png" width="400px"/>
-				  <figcaption>Mid fall with ks=500</figcaption>
+				  <figcaption>Mid fall with ks = 500 N/m</figcaption>
 				</td>
 				<td style="text-align: center;">
 				  <img src="Images/Part 2/ks-500-end.png" width="400px"/>
-				  <figcaption>Rest state with ks=500</figcaption>
+				  <figcaption>Rest state with ks = 500 N/m</figcaption>
 				</td>
 			  </tr>
 			  <tr>
 					<td style="text-align: center;">
 						<img src="Images/Part 2/ks-5000-mid.png" width="400px"/>
-						<figcaption>Mid fall with ks=5000</figcaption>
+						<figcaption>Mid fall with ks = 5000 N/m</figcaption>
 					</td>
 					<td style="text-align: center;">
 						<img src="Images/Part 2/ks-5000-end.png" width="400px"/>
-						<figcaption>Rest state with ks=5000</figcaption>
+						<figcaption>Rest state with ks = 5000 N/m</figcaption>
 					</td>
 			  </tr>
 				<tr>
 					<td style="text-align: center;">
 						<img src="Images/Part 2/ks-50000-mid.png" width="400px"/>
-						<figcaption>Mid fall with ks=50000</figcaption>
+						<figcaption>Mid fall with ks = 50000 N/m</figcaption>
 					</td>
 					<td style="text-align: center;">
 						<img src="Images/Part 2/ks-50000-end.png" width="400px"/>
-						<figcaption>Rest state with ks=50000</figcaption>
+						<figcaption>Rest state with ks = 50000 N/m</figcaption>
 					</td>
 					</tr>
 			</table>
 		</div>
-		<h4>density</h4>
+		<p>ks represents the spring constant and represents how stiff
+			as spring is. The higher the spring constant, the stiffer the spring is.
+			What this means for the cloth is that, the higher the ks, the stiffer
+			the cloth.
+		</p>
+		<p>
+			This can be seen in the photos above. When ks = 500 N/m, the spring is 
+			at its most elastic, which is why the cloth has the most folds and wrinkles as it falls and at its rest state
+			out of all the runs. At ks = 5000 N/m, the cloth has only subtle folds as it falls
+			and only loses the smaller folds that were in ks = 500 N/m's rest state. At
+			ks = 50000 N/m, there are almost no folds at all when it is mid falling and only
+			one fold at its rest state. The curvature at the top of the cloth is also much less 
+			compared to the previous runs. 
+		</p>
+		<h4>Density</h4>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
 				  <img src="Images/Part 2/dens-1-mid.png" width="400px"/>
-				  <figcaption>Mid fall with density=1</figcaption>
+				  <figcaption>Mid fall with density = 1 g/cm^2</figcaption>
 				</td>
 				<td style="text-align: center;">
 				  <img src="Images/Part 2/dens-1-end.png" width="400px"/>
-				  <figcaption>Rest state with density=1</figcaption>
+				  <figcaption>Rest state with density = 1 g/cm^2</figcaption>
 				</td>
 			  </tr>
 			  <tr>
 					<td style="text-align: center;">
 						<img src="Images/Part 2/dens-15-mid.png" width="400px"/>
-						<figcaption>Mid fall with density=15</figcaption>
+						<figcaption>Mid fall with density = 15 g/cm^2</figcaption>
 					</td>
 					<td style="text-align: center;">
 						<img src="Images/Part 2/dens-15-end.png" width="400px"/>
-						<figcaption>Rest state with density=15</figcaption>
+						<figcaption>Rest state with density = 15 g/cm^2</figcaption>
 					</td>
 			  </tr>
 				<tr>
 					<td style="text-align: center;">
 						<img src="Images/Part 2/dens-50-mid.png" width="400px"/>
-						<figcaption>Mid fall with density=50</figcaption>
+						<figcaption>Mid fall with density = 50 g/cm^2</figcaption>
 					</td>
 					<td style="text-align: center;">
 						<img src="Images/Part 2/dens-50-end.png" width="400px"/>
-						<figcaption>Rest state with density=50</figcaption>
+						<figcaption>Rest state with density = 50 g/cm^2</figcaption>
 					</td>
 					</tr>
 			</table>
 		</div>
-		<h4>damping</h4>
+		<p>Density plays a role in calculating the masspoints' acceleration.
+			This is because According to Newton's laws, mass is given by 
+			<em>m = &rho; &middot; V</em> and acceleration by <em>F = m/a</em>,
+			where &rho; is equal to density. This means that the greater the density,
+			the greater the force, because acceleration is constant.
+		</p>
+		<p>This can be observed in the images above. When density = 1 g/cm^2, the cloth is basically
+			smooth with no wrinkles when it is falling and at its rest state. The top of the cloth
+			is almost horizontal. As density
+			increases, and thus force, more wrinkles and folds are created. The top of the cloth
+			resembles more of a parabola now. At density = 15 g/cm^2,
+			the cloth has mild folds at both the mid fall and rest state. When density = 50 g/cm^2,
+			the cloth has the most pronounced folds and the greatest curvature at the top
+			middle of the cloth.
+		</p>
+		<h4>Damping</h4>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
 				  <img src="Images/Part 2/damp-0-mid.png" width="400px"/>
-				  <figcaption>Mid fall with damping=0</figcaption>
+				  <figcaption>Mid fall with damping = 0%</figcaption>
 				</td>
 				<td style="text-align: center;">
 				  <img src="Images/Part 2/damp-0-end.png" width="400px"/>
-				  <figcaption>Rest state with damping=0</figcaption>
+				  <figcaption>Fallen state with damping = 0%</figcaption>
 				</td>
 			  </tr>
 			  <tr>
 					<td style="text-align: center;">
 						<img src="Images/Part 2/damp-0.2-mid.png" width="400px"/>
-						<figcaption>Mid fall with damping=0.2</figcaption>
+						<figcaption>Mid fall with damping = 0.2%</figcaption>
 					</td>
 					<td style="text-align: center;">
 						<img src="Images/Part 2/damp-0.2-end.png" width="400px"/>
-						<figcaption>Rest state with damping=0.2</figcaption>
+						<figcaption>Rest state with damping = 0.2%</figcaption>
 					</td>
 			  </tr>
 				<tr>
 					<td style="text-align: center;">
 						<img src="Images/Part 2/damp-1-mid.png" width="400px"/>
-						<figcaption>Mid fall with damping=1</figcaption>
+						<figcaption>Mid fall with damping = 1%</figcaption>
 					</td>
 					<td style="text-align: center;">
 						<img src="Images/Part 2/damp-1-end.png" width="400px"/>
-						<figcaption>Rest state with damping=1</figcaption>
+						<figcaption>Rest state with damping = 1%</figcaption>
 					</td>
 					</tr>
 			</table>
 		</div>
-		<h3>Cloth with 4 Pins in its Resting State</h3>
+		<p>Damping is the process where energy is lost in the environment.
+			If damping, or d=0%, this means that no energy is lost. If d is greater
+			than 0, this means that energy is lost. The rate energy is lost
+			increases as d increases.
+		</p>
+		<p>This loss of energy can be observed with the various runs of the pinned
+			cloth. When d is equal to 0%, the mass points, dont lose energy, which is why
+			as it is falling, there is much more vibrations and wrinkles,
+			indicating more energy. It also falls very fast, almost instantly, and continues to 
+			oscillate, never coming to rest. As d goes up, the amoount of wrinkles decreases. When
+			d = 0.2%, the cloth has fewer sharp wrinkles compared to when d = 0%, and the final rest
+			state has softer folds. The extreme is when d = 1%. As it is falling, it appears to
+			 be almost completely smooth and when it is at rest, it lacks the subtle folds
+			 that d = 0.2% had. It falls much slower and comes to rest without any extra swinging.
+		<h3>Cloth with 4 Pins in its Resting State (Default Parameters)</h3>
 		<figure>
 			<img src="Images/Part 2/4_pin_wireframe.png" style="width: 100%"/>
 			<figcaption>Wireframe Cloth with 4 Pins
