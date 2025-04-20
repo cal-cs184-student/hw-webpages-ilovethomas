@@ -1,0 +1,172 @@
+<html>
+	<head>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=default'></script>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+		<style>
+			h1 {
+				text-align: center;
+			}
+
+			.container {
+				margin: 0 auto;
+				padding: 60px 20%;
+			}
+
+			figure {
+				text-align: center;
+			}
+
+			img {
+				display: inline-block;
+			}
+
+			body {
+				font-family: 'Inter', sans-serif;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+		<h1>CS184/284A Spring 2025 Milestone Report: Non-photorealistic rendering machine</h1>
+		<div style="text-align: center;">(Team 41) Names: Ryan Kwong, Lemuel Sumardy, Thomas Yeoh, Ziran Zhou</div>
+
+		<br>
+
+		Link to webpage: <a href="https://cal-cs184-student.github.io/hw-webpages-ilovethomas/final-project/">https://cal-cs184-student.github.io/hw-webpages-ilovethomas/final-project/</a>
+
+		<br>
+
+		Link to GitHub repository: <a href="https://github.com/biancanev/cs184-final-project">https://github.com/biancanev/cs184-final-project</a>
+
+		<br>
+
+		Link to Milestone: <a href="https://cal-cs184-student.github.io/hw-webpages-ilovethomas/final-project/milestone">https://cal-cs184-student.github.io/hw-webpages-ilovethomas/final-project/milestone</a>
+
+		<!--
+		We've already added one heading per part, to make your write-up as navigable when grading. Please fit your write-up within these sections!
+		-->
+
+		<h2>What We Have Accomplished So Far</h2>
+		So far, we've made solid progress on two main components of our project. First, we built a basic custom GUI that allows us to load shaders. Second, we’ve developed a nearly complete sketch shader, which builds on HW4 to ensure reliability before integrating into the custom GUI. We've also improved the overall shading for better visual effects. However, the cel and watercolor shaders still require significant work—especially cel shading, which needs to be tested on models beyond just a sphere.
+
+		<h2>Preliminary Results</h2>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="img/sketch.png" width="250px"/>
+					<figcaption>Sketch shading</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="img/cel.png" width="250px"/>
+					<figcaption>Cel shading</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="img/watercolor.png" width="250px"/>
+					<figcaption>Watercolor shading</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+	
+		<h2>Reflection On Progress</h2>
+		While we have a basic implementation for all 3 shaders and the custom GUI, the shaders lack depth and shadowing, and the GUI needs more refinement. Out of all our shaders, the sketch shader is the closest to the final product. As for the cel/toon shader, it is slowly getting there, but the bands could be more discrete to give a crisper look. Watercolor shader needs work - we need to look into environment bleeding to create the overlapping colors effect that watercolors produce.
+		
+		<h2>Updated Timeline</h2>
+		<h3>Schedule</h3>
+		As far as what we planned, we seem to be on track. Main focus: refine and integrate.
+		<table>
+			<tr>
+					<td valign="top"><strong>Week 2</strong> <br>(4/13 - 4/19)</td>
+					<td>
+							<ul>
+									<li>Start work on all 3 shaders (team divided accordingly).</li>
+									<li>Have something preliminary rendered images that somewhat resembles the shader</li>
+									<ul>
+											<li>Color</li>
+									</ul>
+									<ul>
+											<li>Shadows Stylized for each shader
+											</li>
+											<ul>
+													<li>
+															May be harder for sketch
+													</li>
+											</ul>
+									</ul>
+									<li>Graded milestone due on 4/20.</li>
+							</ul>
+					</td>
+			</tr>
+			<tr>
+					<td valign="top"><strong>Week 3</strong> <br>(4/20 - 4/26)</td>
+					<td>
+							<ul>
+									<li>Continue developing shaders, make couple more features done </li>
+									<ul>
+											<li>More specific to each shader
+											</li>
+									</ul>
+									<ul>
+											<li> <strong>Cel Shading:</strong></li>
+											<ul>
+													<li>Rim Lighting</li>
+											</ul>
+											<ul>
+													<li>Specular Reflection</li>
+											</ul>
+									</ul>
+									<ul>
+											<li><strong>Watercolor Shading:</strong></li>
+											<ul>
+													<li>Pigment Blending</li>
+											</ul>
+											<ul>
+													<li>Texture Overlay</li>
+											</ul>
+											<ul>
+													<li>Variable Transparency</li>
+											</ul>
+									</ul>
+									<ul>
+											<li><strong>Sketch Shading:</strong></li>
+											<ul>
+													<li>Integrate various hatching/sketching techniques.</li>
+											</ul>
+									</ul>
+							</ul>
+					</td>
+			</tr>
+			<tr>
+					<td valign="top"><strong>Week 4</strong> <br>(4/27 - 5/3)</td>
+					<td>
+							<ul>
+									<li>Finish work on shaders from previous week on 4/30 and Finalize shader development.</li>
+									<li>Work on the project report and create a demonstration video.</li>
+							</ul>
+					</td>
+			</tr>
+			<tr>
+					<td valign="top"><strong>Week 5</strong> <br>(5/4 - 5/5)</td>
+					<td>
+							<ul>
+									<li>Submit final deliverables (report / video) on 5/4.</li>
+									<li>Final presentation on 5/5.</li>
+							</ul>
+					</td>
+			</tr>
+		</table>
+		
+		<h2>Milestone Video</h2>
+		<video width="640" height="360" controls>
+			<source src="img/CS184-Checkpoint.mov" type="video/mp4">
+			Your browser does not support the video tag.
+		</video>
+		<p>Link: <a href="https://drive.google.com/file/d/1yFI8drkBcRs0jQEHofBx4JSmB554UKZL/view?usp=sharing">https://drive.google.com/file/d/1yFI8drkBcRs0jQEHofBx4JSmB554UKZL/view?usp=sharing</a></p>
+
+		<h2>Presentation Slides</h2>
+		<p>Link: <a href="https://docs.google.com/presentation/d/1dd-GID69t1OIpNejCWznZKB57KMthsEhZeGFiMwlozQ/edit?usp=sharing">https://docs.google.com/presentation/d/1dd-GID69t1OIpNejCWznZKB57KMthsEhZeGFiMwlozQ/edit?usp=sharing</a></p>
+
+		</div>
+	</body>
+</html>
