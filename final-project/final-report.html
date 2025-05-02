@@ -47,6 +47,7 @@
 		For sketch shading, a lot of papers such as <a href="">this</a> one used sketch textures of varying shading density and mapped it to the object. This felt a bit simple, so we decided to make a procedurally generated version. Using the same concept of varying sketch density with light we made a shader that used cross hatching to create a sketched look. One struggle we had is getting the generated cross hatching to look like natural pencil strokes rather than just diagonal lines. A couple ways we improved the organic look of the shader was by adding waviness to the lines, making the density gradient a power function rather than a linear function, and making the line colors a gradient of grayscale rather than just black and white.
 
 		<h3>Cel Shading</h3>
+		Cel is quite closely related to Blinn-Phong shading. We adapted the shading algorithm from homework 4, but this time we discretized the diffuse lighting component of the shader as mentioned in this <a href="https://panthavma.com/articles/shading/toonshading/">blog post</a>. This creates the effect of bands on the models which creates a cartoonish look. With out implementation, we played around with different thresholds and number of bands and landed on using three bands to create a visually appealing look, striking the balance between simplicity and complexity. We further simplified the look by removing the specular component to create a more matted look. One issue that we encountered was that for some models, mesh vertices were not particularly smooth but rather jaggered, this caused the bands to appear more patchy and less smooth (check out baby Groot model). However, we found that with the right model (and texture), we are able to create a very convincing model with cel shading (Link model)!
 
 		<h3>Watercolor Shading</h3>
 	
@@ -61,7 +62,7 @@
 					<figcaption>Sketch shading</figcaption>
 				</td>
 				<td style="text-align: center;">
-				  <img src="img/cel.png" width="250px"/>
+				  <img src="img/link_cel.png" width="250px"/>
 					<figcaption>Cel shading</figcaption>
 				</td>
 				<td style="text-align: center;">
@@ -80,7 +81,7 @@
 					<figcaption>Sketch shading</figcaption>
 				</td>
 				<td style="text-align: center;">
-				  <img src="img/cel.png" width="250px"/>
+				  <img src="img/groot_cel.png" width="250px"/>
 					<figcaption>Cel shading</figcaption>
 				</td>
 				<td style="text-align: center;">
@@ -94,6 +95,12 @@
 		<h2>References</h2>
 		<li>Cel shading wikipedia<ul>
 			<li><a href="https://en.wikipedia.org/wiki/Cel_shading">https://en.wikipedia.org/wiki/Cel_shading</a></li>
+		</ul></li>
+		<li>Cel shading history + mechanics<ul>
+			<li><a href="https://www.youtube.com/watch?v=mnxs6CR6Zrk">https://www.youtube.com/watch?v=mnxs6CR6Zrk</a></li>
+		</ul></li>
+		<li>Toon shading fundamentals blog<ul>
+			<li><a href="https://panthavma.com/articles/shading/toonshading/">https://panthavma.com/articles/shading/toonshading/</a></li>
 		</ul></li>
 		<li>Computer-generated watercolor<ul>
 			<li><a href="https://dl.acm.org/doi/pdf/10.1145/258734.258896">https://dl.acm.org/doi/pdf/10.1145/258734.258896</a></li>
