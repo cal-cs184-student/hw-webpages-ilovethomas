@@ -40,21 +40,24 @@
 
 		<h2>Abstract</h2>
 		Our project is a non-photorealistic rendering (NPR) machine that allows users to apply different artistic styles to 3D models in real-time. We implemented three distinct shading techniques: sketch shading, cel shading, and watercolor shading. Sketch shading offers a hand-drawn look through the use of density varying cross-hatching. Cel shading creates a cartoonish look by discretizing a diffuse or specular shader, creating noticable bands. Watercolor shading simulates painted textures through soft gradients and blooming distortions. The user can select the desired shading technique through our simple GUI and see the effect applied to the model in real-time. Our custom GUI offers the user complete control over the shading parameters used in our NPR shaders, lighting intensity and location, and camera position.
+		<br><br><hr>
 		<h2>Technical Approach</h2>
 
 		<h3>Sketch Shading</h3>
-		For sketch shading a lot of papers such as <a href="">this</a> one used sketch textures of varying shading density and mapped it to the object. This felt a bit simple, so we decided to make a procedurally generated version. Using the same concept of varying sketch density with light we made a shader that used cross hatching to create a sketched look. One struggle we had is getting the generated cross hatching to look like natural pencil strokes rather than just diagonal lines. A couple ways we improved the organic look of the shader was by adding waviness to the lines, making the density gradient a power function rather than a linear function, and making the line colors a gradient of grayscale rather than just black and white.
+		For sketch shading, a lot of papers such as <a href="">this</a> one used sketch textures of varying shading density and mapped it to the object. This felt a bit simple, so we decided to make a procedurally generated version. Using the same concept of varying sketch density with light we made a shader that used cross hatching to create a sketched look. One struggle we had is getting the generated cross hatching to look like natural pencil strokes rather than just diagonal lines. A couple ways we improved the organic look of the shader was by adding waviness to the lines, making the density gradient a power function rather than a linear function, and making the line colors a gradient of grayscale rather than just black and white.
 
 		<h3>Cel Shading</h3>
 
 		<h3>Watercolor Shading</h3>
 	
+		<br><br><hr>
 		<h2>Results</h2>
+		<h3>Link Model</h3>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="img/sketch.png" width="250px"/>
+				  <img src="img/link_sketch.png" width="250px"/>
 					<figcaption>Sketch shading</figcaption>
 				</td>
 				<td style="text-align: center;">
@@ -68,9 +71,47 @@
 			  </tr>
 			</table>
 		</div>
+		<h3>Groot Model</h3>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="img/groot_sketch.png" width="250px"/>
+					<figcaption>Sketch shading</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="img/cel.png" width="250px"/>
+					<figcaption>Cel shading</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="img/watercolor.png" width="250px"/>
+					<figcaption>Watercolor shading</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+		<br><br><hr>
 		<h2>References</h2>
-		As far as what we planned, we seem to be on track. Main focus: refine and integrate.
-		
+		<li>Cel shading wikipedia<ul>
+			<li><a href="https://en.wikipedia.org/wiki/Cel_shading">https://en.wikipedia.org/wiki/Cel_shading</a></li>
+		</ul></li>
+		<li>Computer-generated watercolor<ul>
+			<li><a href="https://dl.acm.org/doi/pdf/10.1145/258734.258896">https://dl.acm.org/doi/pdf/10.1145/258734.258896</a></li>
+		</ul></li>
+		<li>Watercolor inspired non photo-realistic rendering for augmented reality<ul>
+			<li><a href="https://faculty.cc.gatech.edu/~turk/my_papers/npr_ar_2008.pdf">https://faculty.cc.gatech.edu/~turk/my_papers/npr_ar_2008.pdf</a></li>
+		</ul></li>
+		<li>Non-Photorealistic Rendering using Watercolor Inspired Textures and Illumination<ul>
+			<li><a href="https://www.dimap.ufrn.br/~motta/dim102/Projetos/NPR/Lume_PG01.pdf">https://www.dimap.ufrn.br/~motta/dim102/Projetos/NPR/Lume_PG01.pdf</a></li>
+		</ul></li>
+		<li>Sketch effect blog: <ul>
+			<li><a href="https://kylehalladay.com/blog/tutorial/2017/02/21/Pencil-Sketch-Effect.html">https://kylehalladay.com/blog/tutorial/2017/02/21/Pencil-Sketch-Effect.html</a></li>
+		</ul></li>
+		<li>Real-time hatching: <ul>
+			<li><a href="https://hhoppe.com/hatching.pdf">https://hhoppe.com/hatching.pdf</a></li>
+		</ul></li>
+
+		<br><br><hr>
 		<h2>Contribuition from each team member</h2>
         <ul>
             <li>Ryan Kwong<ul>
