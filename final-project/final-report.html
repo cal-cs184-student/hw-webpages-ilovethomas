@@ -39,10 +39,45 @@
 		Link to GitHub repository: <a href="https://github.com/biancanev/cs184-final-project">https://github.com/biancanev/cs184-final-project</a>
 
 		<h2>Abstract</h2>
-		Our project is a non-photorealistic rendering (NPR) machine that allows users to apply different artistic styles to 3D models in real-time. We started from scratch with just a blank C++ file. For our final product, we created an OpenGL/Imgui interface that is able to properly display three distinct shading techniques: sketch shading, cel shading, and watercolor shading. Sketch shading offers a hand-drawn look through the use of density varying cross-hatching. Cel shading creates a cartoonish look by discretizing a diffuse or specular shader, creating noticable bands. Watercolor shading simulates painted textures through soft gradients and blooming distortions. The user can select the desired shading technique through our simple GUI and see the effect applied to the model in real-time. Our custom GUI offers the user complete control over the shading parameters used in our NPR shaders, lighting intensity and location, and camera position. One thing that separates our project from others is that everything is procedurally generated, instead of mapping the NPR features from textures.
+		Our project is a non-photorealistic rendering (NPR) machine that allows users to apply different artistic styles to 3D
+		models in real-time. We started from scratch with just a blank C++ file. For our final product, we created an
+		OpenGL/Imgui interface that is able to properly display three distinct shading techniques: sketch shading, cel shading,
+		and watercolor shading. Sketch shading offers a hand-drawn look through the use of density varying cross-hatching. Cel
+		shading creates a cartoonish look by discretizing a diffuse or specular shader, creating noticable bands. Watercolor
+		shading simulates painted textures through soft gradients and blooming distortions. The user can select the desired
+		shading technique through our simple GUI and see the effect applied to the model in real-time. Our custom GUI offers the
+		user complete control over the shading parameters used in our NPR shaders, lighting intensity and location, model attributes and camera
+		position/orientation. One thing that separates our project from others is that everything is procedurally generated, instead of
+		mapping the NPR features from textures.
 		<br><br><hr>
 		<h2>Technical Approach</h2>
-
+		<h3>GUI</h3>
+		<p>
+			The camera system is controlled through <b>Position</b>, <b>Front</b>, <b>Up</b>, <b>Right</b>, and <b>Target</b>
+			vectors, with the camera orientation defined by Euler angles (<b>Yaw</b>, <b>Pitch</b>, <b>Roll</b>). The
+			<b>updateCameraVectors()</b> method first computes the <b>Front</b> vector using spherical coordinates: <b>Front.x</b> =
+			cos(Yaw) * cos(Pitch), <b>Front.y</b> = sin(Pitch), <b>Front.z</b> = sin(Yaw) * cos(Pitch). To handle roll, we first
+			calculate the initial <b>Right</b> and <b>Up</b> vectors without roll using cross products: <b>rightNoRoll =
+				normalize(cross(Front, WorldUp))</b> and <b>upNoRoll = normalize(cross(rightNoRoll, Front))</b>. Then, we apply the
+			roll rotation around the <b>Front</b> vector using trigonometry: <b>Right.x = rightNoRoll.x * cos(rollRadians) +
+				upNoRoll.x * sin(rollRadians)</b>, with similar calculations for the y and z components. Finally, the <b>Up</b> vector
+			is recomputed as <b>normalize(cross(Right, Front))</b>. The camera tools capture mouse movement and update the
+			appropriate vectors to be able to <i>pan</i>, <i>orbit</i>, <i>zoom</i>, <i>tilt</i>, <i>rotate</i>, and <i>roll</i>.
+		</p>
+		<p>
+			The object manipulation tools use a transformation matrix, <b>matrix = translate * rotate * scale</b>, or position. Each
+			tool modifies the appropriate parameters through mouse movements translated by sensitivity. For scaling, we increase or
+			decrease the scale value and ensure there are valid values above the minimum thresholds: <b>Scale.x = fmax(0.01f,
+				Scale.x + yoffset * ScaleSensitivity)</b>. Rotation transforms apply incremental changes to the Euler angles while
+			ensuring they are normalized within a 0–360° range. Translation tools modify position directly.
+		</p>
+		<p>
+			The reference grid provides a reference for size, position and orientation. It is implemented as a flat surface with a
+			grid shader. The grid is generated in the <b>createGrid()</b> which creates a quad mesh with just four vertices at
+			(±halfSize, 0, ±halfSize) to form the plane. The grid's rendering uses a dedicated fragment shader (<b>grid.frag</b>)
+			that creates anti-aliased grid lines: <b>grid = abs(fract(coord - 0.5) - 0.5) / fwidth(coord)</b>, where <b>fract()</b>
+			creates the repeated pattern and <b>fwidth()</b> creates consistent line thickness.
+		</p>
 		<h3>Sketch Shading</h3>
 		For sketch shading, a lot of papers such as <a href="https://kylehalladay.com/blog/tutorial/2017/02/21/Pencil-Sketch-Effect.html">this</a> one used sketch textures of varying shading density and mapped it to the object. This felt a bit simple, so we decided to make a procedurally generated version. Using the same concept of varying sketch density with light we made a shader that used cross hatching to create a sketched look. One struggle we had is getting the generated cross hatching to look like natural pencil strokes rather than just diagonal lines. A couple ways we improved the organic look of the shader was by adding waviness to the lines, making the density gradient a power function rather than a linear function, and making the line colors a gradient of grayscale rather than just black and white.
 
@@ -54,6 +89,13 @@
 	
 		<br><br><hr>
 		<h2>Results</h2>
+		<h3>GUI</h3>
+		<figure style="text-align: center;">
+
+			<img src="img/gui.png" width="100%"/>
+			<figcaption>GUI Window</figcaption>
+		</figure>
+
 		<h3>Link Model</h3>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
@@ -130,6 +172,11 @@
 
 		<br><br><hr>
 		<h2>Contribuition from each team member</h2>
+		<h3>Lemuel Sumardy</h3>
+		<p>I built upon Ryan's basic implementation of the GUI, by improving the UI/UX. This included features
+			for camera control, model transformations, creating a reference plane, texture/color support, and general
+			ease of use improvements.
+		</p>
         <ul>
             <li>Ryan Kwong<ul>
                 <li>Implemented sketch shader</li>
