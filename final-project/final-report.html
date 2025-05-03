@@ -144,8 +144,8 @@
 		<center>
 			<iframe 
 			src="https://drive.google.com/file/d/1WwKZLqHq3_VqPcDIgSUevKzhha6vi7c7/preview" 
-			width="70%" 
-			height="480" 
+			width="60%" 
+			height="400" 
 			allow="autoplay" 
 			allowfullscreen>
 		</iframe>
@@ -162,9 +162,7 @@
 			Sketch effect blog (<a href="https://kylehalladay.com/blog/tutorial/2017/02/21/Pencil-Sketch-Effect.html">https://kylehalladay.com/blog/tutorial/2017/02/21/Pencil-Sketch-Effect.html</a>),
 			Real-time hatching (<a href="https://hhoppe.com/hatching.pdf">https://hhoppe.com/hatching.pdf</a>)
 		</p>
-
-
-		<br><br><hr>
+		<br><hr>
 		<h2>Contribution from each team member</h2>
 		<h3>Ryan Kwong</h3>
 		<p>I built the overall GUI framework with ImGui, allowing the user to do things such as camera manipulation, model loading, and shader switching. I also implemented the sketch shading effect, which involved writing a fragment shader that generates cross-hatch patterns based on the lighting of the scene. This was achieved by calculating fragment colors based on light direction and magnitude to give it a hand-drawn appearance. Since everything is procedurally generated, the user has full control over the the line style, hatching density, and other stylistic parameters.
@@ -182,13 +180,8 @@
 				model, simulating the appearance of watercolor paintings, though not on 2D paper. To achieve this, in the
 				Watercolor.frag shader file, I incorporated important features including granulation, edge intensity, 
 				and optional applications of noise and paper textures. The shader also utilized many other parameters such as edge
-				intensity, noise values, etc. all of which were exposed to the user for fine-tuning through ImGUI control panel. I
-				also needed to make the necessary modifications in main.cpp to support shader management and model loading and
-				parameters introduction. Specifically, the shader is linked and selectable through the user interface, allowing
-				seamless integration with the others, and optional selection of noise and paper textures through the aforementioned
-				implementation, which can be integral to the watercolor effect, depending on the model rendered. The adjustments
-				ensured the textures are loaded and bound dynamically in the shader, improving the rendering effects to become more
-				varied and realistic.</p>
+				intensity, noise values, etc. all of which were exposed to the user for fine-tuning through ImGUI control panel.I also added an optional selection of noise and paper textures through the aforementioned
+				implementation, improving the rendering effects to become more varied and realistic.</p>
 			<p>Without time constraints, improvements could be made on granulation like using Perlin noises for more organic texture, using Sobel filter for better edge detection and create more pronounced, painterly edges, or even to add in dynamic transparency to allow color fading and blending between the paper texture and the environment  to create a more realistic watercolor blending appearance.		</div></p>
 	</body>
 </html>
