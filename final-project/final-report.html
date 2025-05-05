@@ -7,9 +7,13 @@
 				text-align: center;
 			}
 
+			p {
+				font-size: 14px;
+			}
+
 			.container {
 				margin: 0 auto;
-				padding: 60px 20%;
+				padding: 30px 5%;
 			}
 
 			figure {
@@ -27,67 +31,156 @@
 	</head>
 	<body>
 		<div class="container">
-		<h1>CS184/284A Spring 2025 Milestone Report: Non-photorealistic rendering machine</h1>
+		<h1>CS184/284A Spring 2025 Final Report: Non-photorealistic rendering machine</h1>
 		<div style="text-align: center;">Names: Ryan Kwong, Lemuel Sumardy, Thomas Yeoh, Ziran Zhou</div>
 
 		<br>
 
-		Link to webpage: <a href="https://cal-cs184-student.github.io/hw-webpages-ilovethomas/final-project/">https://cal-cs184-student.github.io/hw-webpages-ilovethomas/final-project/</a>
+		Link to webpage: <a href="https://biancanev.github.io/hw-webpages-ilovethomas/final-project/final-report">https://cal-cs184-student.github.io/hw-webpages-ilovethomas/final-project/</a>
 
 		<br>
 
 		Link to GitHub repository: <a href="https://github.com/biancanev/cs184-final-project">https://github.com/biancanev/cs184-final-project</a>
 
 		<h2>Abstract</h2>
-		Our project is a non-photorealistic rendering (NPR) machine that allows users to apply different artistic styles to 3D models in real-time. We implemented three distinct shading techniques: sketch shading, cel shading, and watercolor shading. Sketch shading offers a hand-drawn look through the use of density varying cross-hatching. Cel shading creates a cartoonish look by discretizing a diffuse or specular shader, creating noticable bands. Watercolor shading simulates painted textures through soft gradients and blooming distortions. The user can select the desired shading technique through our simple GUI and see the effect applied to the model in real-time. Our custom GUI offers the user complete control over the shading parameters used in our NPR shaders, lighting intensity and location, and camera position.
+		<p>
+			Our project is a non-photorealistic rendering (NPR) machine that allows users to apply different artistic styles to 3D
+			models in real-time. We started from scratch with just a blank C++ file. For our final product, we created an
+			OpenGL/Imgui interface that is able to properly display three distinct shading techniques: sketch shading, cel shading,
+			and watercolor shading. Sketch shading offers a hand-drawn look through the use of density varying cross-hatching. Cel
+			shading creates a cartoonish look by discretizing a diffuse or specular shader, creating noticable bands. Watercolor
+			shading simulates painted textures through soft gradients and blooming distortions. The user can select the desired
+			shading technique through our simple GUI and see the effect applied to the model in real-time. Our custom GUI offers the
+			user complete control over the shading parameters used in our NPR shaders, lighting intensity and location, model attributes and camera
+			position/orientation. One thing that separates our project from others is that everything is procedurally generated, instead of
+			mapping the NPR features from textures.
+		</p>
+		<br><hr>
 		<h2>Technical Approach</h2>
-
+		<h3>GUI</h3>
+		<p>
+			The camera system is controlled through <b>Position</b>, <b>Front</b>, <b>Up</b>, <b>Right</b>, and <b>Target</b>
+			vectors, with the camera orientation defined by Euler angles (<b>Yaw</b>, <b>Pitch</b>, <b>Roll</b>). The
+			<b>updateCameraVectors()</b> method first computes the <b>Front</b> vector using spherical coordinates: <b>Front.x</b> =
+			cos(Yaw) * cos(Pitch), <b>Front.y</b> = sin(Pitch), <b>Front.z</b> = sin(Yaw) * cos(Pitch). To handle roll, we first
+			calculate the initial <b>Right</b> and <b>Up</b> vectors without roll using cross products: <b>rightNoRoll =
+				normalize(cross(Front, WorldUp))</b> and <b>upNoRoll = normalize(cross(rightNoRoll, Front))</b>. Then, we apply the
+			roll rotation around the <b>Front</b> vector using trigonometry: <b>Right.x = rightNoRoll.x * cos(rollRadians) +
+				upNoRoll.x * sin(rollRadians)</b>, with similar calculations for the y and z components. Finally, the <b>Up</b> vector
+			is recomputed as <b>normalize(cross(Right, Front))</b>. The camera tools capture mouse movement and update the
+			appropriate vectors to be able to <i>pan</i>, <i>orbit</i>, <i>zoom</i>, <i>tilt</i>, <i>rotate</i>, and <i>roll</i>.
+		</p>
+		<p>
+			The object manipulation tools use a transformation matrix, <b>matrix = translate * rotate * scale</b>, or position. Each
+			tool modifies the appropriate parameters through mouse movements translated by sensitivity. For scaling, we increase or
+			decrease the scale value and ensure there are valid values above the minimum thresholds: <b>Scale.x = fmax(0.01f,
+				Scale.x + yoffset * ScaleSensitivity)</b>. Rotation transforms apply incremental changes to the Euler angles while
+			ensuring they are normalized within a 0–360° range. Translation tools modify position directly.
+		</p>
+		<p>
+			The reference grid provides a reference for size, position and orientation. It is implemented as a flat surface with a
+			grid shader. The grid is generated in the <b>createGrid()</b> which creates a quad mesh with just four vertices at
+			(±halfSize, 0, ±halfSize) to form the plane. The grid's rendering uses a dedicated fragment shader (<b>grid.frag</b>)
+			that creates anti-aliased grid lines: <b>grid = abs(fract(coord - 0.5) - 0.5) / fwidth(coord)</b>, where <b>fract()</b>
+			creates the repeated pattern and <b>fwidth()</b> creates consistent line thickness.
+		</p>
 		<h3>Sketch Shading</h3>
-		For sketch shading a lot of papers such as <a href="">this</a> one used sketch textures of varying shading density and mapped it to the object. This felt a bit simple, so we decided to make a procedurally generated version. Using the same concept of varying sketch density with light we made a shader that used cross hatching to create a sketched look. One struggle we had is getting the generated cross hatching to look like natural pencil strokes rather than just diagonal lines. A couple ways we improved the organic look of the shader was by adding waviness to the lines, making the density gradient a power function rather than a linear function, and making the line colors a gradient of grayscale rather than just black and white.
+		<p>For sketch shading, a lot of papers such as <a href="https://kylehalladay.com/blog/tutorial/2017/02/21/Pencil-Sketch-Effect.html">this</a> one used sketch textures of varying shading density and mapped it to the object. This felt a bit simple, so we decided to make a procedurally generated version. Using the same concept of varying sketch density with light we made a shader that used cross hatching to create a sketched look. We also added some random dot noise to create a nice paper grain texture to really sell the look. One struggle we had is getting the generated cross hatching to look like natural pencil strokes rather than just diagonal lines. A couple ways we improved the organic look of the shader was by adding waviness to the lines, making the density gradient a power function rather than a linear function, and making the line colors a gradient of grayscale rather than just black and white.</p>
 
 		<h3>Cel Shading</h3>
+		<p>Cel is quite closely related to Blinn-Phong shading. We adapted the shading algorithm from homework 4, but this time we discretized the diffuse lighting component of the shader as mentioned in this <a href="https://panthavma.com/articles/shading/toonshading/">blog post</a>. This creates the effect of bands on the models which creates a cartoonish look. With out implementation, we played around with different thresholds and number of bands and landed on using three bands to create a visually appealing look, striking the balance between simplicity and complexity. We further simplified the look by removing the specular component to create a more matted look. One issue that we encountered was that for some models, mesh vertices were not particularly smooth but rather jaggered, this caused the bands to appear more patchy and less smooth (check out baby Groot model). However, we found that with the right model (and texture), we are able to create a very convincing model with cel shading (Link model)!</p>
 
 		<h3>Watercolor Shading</h3>
+		<p>The watercolor effect is related to the Phong shading model, but instead of using a simple diffuse and specular component, we use a more complex texture-based approach. We first sample the texture of the model and then apply a Gaussian blur to create a soft gradient effect. This simulates the blending of colors that occurs in watercolor painting. Additionally, we apply a bloom effect to enhance the light areas of the model, creating a glowing effect that is characteristic of watercolor paintings. The shader also incorporates noise to add a more organic feel to the rendering, mimicking the imperfections found in traditional watercolor art. Much like the sketch shader, current implementations of the watercolor shader often just use specular shading and textues to reate the watercolor look. We wanted to parameterize the process for more granular control over the final image.</p>
 	
+		<br><hr>
 		<h2>Results</h2>
+		<h3>GUI</h3>
+		<figure style="text-align: center;">
+			<img src="img/gui.png" width="60%"/>
+			<figcaption>GUI Window</figcaption>
+		</figure>
+
+		<h3>Link Model</h3>
+		<p>Here are the results of our shaders including some interesting art bugs we found!</p>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
-				<td style="text-align: center;">
-				  <img src="img/sketch.png" width="250px"/>
-					<figcaption>Sketch shading</figcaption>
-				</td>
-				<td style="text-align: center;">
-				  <img src="img/cel.png" width="250px"/>
-					<figcaption>Cel shading</figcaption>
-				</td>
-				<td style="text-align: center;">
-				  <img src="img/watercolor.png" width="250px"/>
-					<figcaption>Watercolor shading</figcaption>
-				</td>
+					<td style="text-align: center;">
+						<img src="img/link_phong.png" width="300px"/>
+						<figcaption>Standard (Phong) shading</figcaption>
+					</td>
+					<td style="text-align: center;">
+						<img src="img/link_sketch.png" width="300px"/>
+						<figcaption>Sketch shading</figcaption>
+					</td>
+					<td style="text-align: center;">
+						<img src="img/link_cel.png" width="300px"/>
+						<figcaption>Cel shading</figcaption>
+					</td>
+			  </tr>
+				<tr>
+					<td style="text-align: center;">
+						<img src="img/link_watercolor.png" width="300px"/>
+						<figcaption>Watercolor shading</figcaption>
+					</td>
+					<td style="text-align: center;">
+						<img src="img/link_stone.png" width="300px"/>
+						<figcaption>Stone/marble-like shading</figcaption>
+					</td>
+					<td style="text-align: center;">
+						<img src="img/cel2_link.png" width="300px"/>
+						<figcaption>Cel shader + watercoloring?</figcaption>
+					</td>
 			  </tr>
 			</table>
 		</div>
-		<h2>References</h2>
-		As far as what we planned, we seem to be on track. Main focus: refine and integrate.
+
+		<h3>Video of our Results</h3>
+		<a href="https://drive.google.com/file/d/1WwKZLqHq3_VqPcDIgSUevKzhha6vi7c7/view?usp=drive_link" target="_blank">
+			View File on Google Drive
+		</a>
 		
-		<h2>Contribuition from each team member</h2>
-        <ul>
-            <li>Ryan Kwong<ul>
-                <li>Implemented sketch shader</li>
-                <li>Creaed the basic design for the GUI</li>
-            </ul></li>
-			<li>Lemuel Sumardy<ul>
-				<li>Added most of the features in the GUI</li>
-				<li>Video editing</li>
-			</ul></li>
-			<li>Thomas Yeoh<ul>
-				<li>Implemented cel shader</li>
-			</ul></li>
-			<li>Ziran Zhou<ul>
-				<li>Implemented watercolor shader</li>
-			</ul></li>
-        </ul>
-		</div>
+		<center>
+			<iframe 
+			src="https://drive.google.com/file/d/1WwKZLqHq3_VqPcDIgSUevKzhha6vi7c7/preview" 
+			width="60%" 
+			height="300" 
+			allow="autoplay" 
+			allowfullscreen>
+		</iframe>
+		</center>
+		<br><hr>
+		<h2>References</h2>
+		<p>
+			Cel shading wikipedia (https<a href="https://en.wikipedia.org/wiki/Cel_shading">https://en.wikipedia.org/wiki/Cel_shading</a>),
+			Cel shading history + mechanics (<a href="https://www.youtube.com/watch?v=mnxs6CR6Zrk">https://www.youtube.com/watch?v=mnxs6CR6Zrk</a>),
+			Toon shading fundamentals blog (<a href="https://panthavma.com/articles/shading/toonshading/">https://panthavma.com/articles/shading/toonshading/</a>),
+			Computer-generated watercolor (<a href="https://dl.acm.org/doi/pdf/10.1145/258734.258896">https://dl.acm.org/doi/pdf/10.1145/258734.258896</a>),
+			Watercolor inspired non photo-realistic rendering for augmented reality (<a href="https://faculty.cc.gatech.edu/~turk/my_papers/npr_ar_2008.pdf">https://faculty.cc.gatech.edu/~turk/my_papers/npr_ar_2008.pdf</a>),
+			Non-Photorealistic Rendering using Watercolor Inspired Textures and Illumination (<a href="https://www.dimap.ufrn.br/~motta/dim102/Projetos/NPR/Lume_PG01.pdf">https://www.dimap.ufrn.br/~motta/dim102/Projetos/NPR/Lume_PG01.pdf</a>),
+			Sketch effect blog (<a href="https://kylehalladay.com/blog/tutorial/2017/02/21/Pencil-Sketch-Effect.html">https://kylehalladay.com/blog/tutorial/2017/02/21/Pencil-Sketch-Effect.html</a>),
+			Real-time hatching (<a href="https://hhoppe.com/hatching.pdf">https://hhoppe.com/hatching.pdf</a>)
+		</p>
+		<br><hr>
+		<h2>Contribution from each team member</h2>
+		<h3>Ryan Kwong</h3>
+		<p>I built the overall GUI framework with ImGui, allowing the user to do things such as camera manipulation, model loading, and shader switching. I also implemented the sketch shading effect, which involved writing a fragment shader that generates cross-hatch patterns based on the lighting of the scene. This was achieved by calculating fragment colors based on light direction and magnitude to give it a hand-drawn appearance. Since everything is procedurally generated, the user has full control over the the line style, hatching density, and other stylistic parameters.
+		</p>
+		<h3>Lemuel Sumardy</h3>
+		<p>I built upon Ryan's basic implementation of the GUI, by improving the UI/UX. This included features
+			for camera control, model transformations, creating a reference plane, texture/color support, and general
+			ease of use improvements.
+		</p>
+		<h3>Thomas Yeoh</h3>
+		<p>I implemented the cel shader. Specifically, I adapted the Phong shader used in homework 4 and discretized the diffuse component by adding thresholds. Furthermore, I added rim lighting to give the objects a glowing effect to make it pop out a little more, giving it depth. I also added a toggle to change between a white and black background in the GUI, because different models/shaders are highlighted differently with different backgrounds. Due to time constraints, I was not able to successfully implement outlines/edge detection for the shader which would make the objects pop out even more, but it would have been a cool effect.</p>
+		<h3>Ziran Zhou</h3>
+			<p>I implemented the “Watercolor” shader involving writing the .frag shader file and integrating it into the main
+				rendering pipeline. The shader’s primary goal was to create a non-photorealistic (NPR) rendering effect for a 3D
+				model, simulating the appearance of watercolor paintings, though not on 2D paper. To achieve this, in the
+				Watercolor.frag shader file, I incorporated important features including granulation, edge intensity, 
+				and optional applications of noise and paper textures. The shader also utilized many other parameters such as edge
+				intensity, noise values, etc. all of which were exposed to the user for fine-tuning through ImGUI control panel.I also added an optional selection of noise and paper textures through the aforementioned
+				implementation, improving the rendering effects to become more varied and realistic. Without time constraints, improvements could be made on granulation like using Perlin noises for more organic texture, using Sobel filter for better edge detection and create more pronounced, painterly edges, or even to add in dynamic transparency to allow color fading and blending between the paper texture and the environment  to create a more realistic watercolor blending appearance.</div>
 	</body>
 </html>
